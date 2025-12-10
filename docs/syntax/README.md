@@ -171,10 +171,10 @@ get_clocks (-regexp)?
 ### get_pins
 
 ```
-get_ports (-regexp)?
-          (-nocase)?
-          (-quiet)?
-          <patterns>
+get_pins (-regexp)?
+         (-nocase)?
+         (-quiet)?
+         <patterns>
 ```
 
 ### get_cells
@@ -186,7 +186,7 @@ get_cells (-regexp)?
           <patterns>
 ```
 
-Note: OpenSTA has special flags for heirarchical matches. Should consider adding.
+Note: OpenSTA has special flags for hierarchical matches. Should consider adding.
 
 ### get_nets
 
@@ -197,7 +197,7 @@ get_nets (-regexp)?
          <patterns>
 ```
 
-Note: OpenSTA has special flags for heirarchical matches. Should consider adding.
+Note: OpenSTA has special flags for hierarchical matches. Should consider adding.
 
 ### all_inputs
 
