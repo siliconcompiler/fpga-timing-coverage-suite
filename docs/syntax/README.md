@@ -148,20 +148,71 @@ set_disable_timing (-from <from_port>)?
                    <cell, instance, port, pin>
 ```
 
-# Query
+## Query
 
-get_ports
+### get_ports
 
-get_clocks
+```
+get_ports (-regexp)?
+          (-nocase)?
+          (-quiet)?
+          <patterns>
+```
 
-get_pins
+### get_clocks
 
-get_cells
+```
+get_clocks (-regexp)?
+           (-nocase)?
+           (-quiet)?
+           <patterns>
+```
 
-get_nets
+### get_pins
 
-all_inputs
+```
+get_pins (-regexp)?
+         (-nocase)?
+         (-quiet)?
+         <patterns>
+```
 
+### get_cells
+
+```
+get_cells (-regexp)?
+          (-nocase)?
+          (-quiet)?
+          <patterns>
+```
+
+Note: OpenSTA has special flags for hierarchical matches. Should consider adding.
+
+### get_nets
+
+```
+get_nets (-regexp)?
+         (-nocase)?
+         (-quiet)?
+         <patterns>
+```
+
+Note: OpenSTA has special flags for hierarchical matches. Should consider adding.
+
+### all_inputs
+
+```
+all_inputs (-no_clocks)?
+```
+
+### all_outputs
+
+```
 all_outputs
+```
 
+### all_clocks
+
+```
 all_clocks
+```
