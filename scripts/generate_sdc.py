@@ -100,9 +100,9 @@ PROPERTIES = {
 
 '''
 PATTERNS = {
-    "clock": ["clk*", "*clk*", "clk[0-9]*", "clock_*"],
-    "port": ["*_in", "*_out", "data*", "port*"],
-    "pin": ["pin*", "*/Q", "*/D", "*/CLK"],
+    "clock": ["clk*", "clk_gen", "clock", "clk1"],
+    "port": ["data*", "*in", "*out", "valid_in"],
+    "pin": ["u1/*", "*/Q", "u2/D", "*/clk"],
     "cell": ["inst*", "reg_*", "*_buffer"],
     "net": ["net*", "n[0-9]*", "*_data"]
     }
@@ -235,11 +235,11 @@ def generate_create_clock():
 
 def generate_get_ports():
     '''
-    Optional: -filter, -regexp, -nocase(Legal only with -regexp), -quiet, -of_objects, patterns
+    Optional: -regexp, -nocase(Legal only with -regexp), -quiet
     '''
     commands = [] #List containing all possible combinations of options
     
-    optional_options = ["-filter", "-regexp", "-nocase", "-quiet", "-of_objects", "patterns"]
+    optional_options = ["-regexp", "-nocase", "-quiet"]
 
     for i in range(len(optional_options) + 1):
         for option_combination in combinations(optional_options, i):
@@ -249,12 +249,6 @@ def generate_get_ports():
                 continue 
                 
             pieces = ["get_ports"]
-            
-            if "-filter" in option_combination:
-                #FIXME: Random filter type
-                filter_type = choose_filter_type()
-                expr = generate_filter(filter_type, "port")
-                pieces.append(f"-filter {expr}")
 
             if "-regexp" in option_combination:
                 pieces.append("-regexp")
@@ -264,30 +258,25 @@ def generate_get_ports():
 
             if "-quiet" in option_combination:
                 pieces.append("-quiet")
-
-            if "-of_objects" in option_combination:
-                #FIXME: Do not make this random.
-                #The name of net or list of nets
-                net_list = random.choice(NETS)
-                pieces.append(f"-of_objects {net_list}")
                 
-            if "patterns" in option_combination:
-                #FIXME: Do not make this random.
-                #A list of port name patterns
-                pattern = generate_pattern("port")
-                pieces.append(pattern)
-
-            commands.append(" ".join(pieces))
+            #A list of port name patterns
+            pattern = generate_pattern("port")
+            pieces.append(pattern)
+            
+            #Join the options to create a proper command
+            pieces = " ".join(pieces)
+            #Add create_clock prerequisites
+            pieces = ("create_clock -period 10 -name clk [get_ports clk]\n" + pieces)
+            commands.append(pieces)
             
     return commands
 
 def generate_get_clocks():
     '''
-    Required: 
-    Optional: -filter, -regexp, -nocase(Legal only with -regexp), -quiet, patterns
+    Optional: -regexp, -nocase(Legal only with -regexp), -quiet
     '''
     commands = [] #List containing all possible combinations of options
-    optional_options = ["-filter", "-regexp", "-nocase", "-quiet", "patterns"]
+    optional_options = ["-regexp", "-nocase", "-quiet"]
 
     for i in range(len(optional_options) + 1):
         for option_combination in combinations(optional_options, i):
@@ -298,12 +287,6 @@ def generate_get_clocks():
 
             pieces = ["get_clocks"]
 
-            if "-filter" in option_combination:
-                #Filter expression with object type "clock"
-                filter_type = choose_filter_type()
-                expr = generate_filter(filter_type, "clock")
-                pieces.append(f"-filter {expr}")
-
             if "-regexp" in option_combination:
                 pieces.append("-regexp")
 
@@ -313,12 +296,18 @@ def generate_get_clocks():
             if "-quiet" in option_combination:
                 pieces.append("-quiet")
 
-            if "patterns" in option_combination:
-                #FIXME: Do not make this random.
-                pattern = generate_pattern("clock")
-                pieces.append(pattern)
-
-            commands.append(" ".join(pieces))
+            pattern = generate_pattern("clock")
+            pieces.append(pattern)
+            
+            #Join the options to create a proper command
+            pieces = " ".join(pieces)
+            #Add create_clock prerequisites
+            pieces = ("create_clock -period 10 -name clk1 [get_ports clk1]\n" + 
+                      "create_clock -period 10 -name clk2 [get_ports clk2]\n" + 
+                      "create_clock -period 10 -name clk_gen [get_ports clk_gen]\n" +
+                      "create_clock -period 10 -name clock [get_ports clock]\n" + 
+                      pieces)
+            commands.append(pieces)
 
     return commands
     
@@ -338,25 +327,7 @@ def generate_get_pins():
             if "-nocase" in option_combination and "-regexp" not in option_combination:
                 continue #Skip this invalid combination
 
-            #Constraint 2: -hierarchical cannot be used with -of_objects
-            if "-hierarchical" in option_combination and "-of_objects" in option_combination:
-                continue #Skip this invalid combination
-
             pieces = ["get_pins"]
-
-            if "-hierarchical" in option_combination:
-                pieces.append("-hierarchical")
-
-            if "-hsc" in option_combination:
-                #FIXME: Do not make this random.
-                separator = random.choice(SEPARATOR)
-                pieces.append(f"-hsc {separator}")
-
-            if "-filter" in option_combination:
-                #Filter expression with object type "pin"
-                filter_type = choose_filter_type()
-                expr = generate_filter(filter_type, "pin")
-                pieces.append(f"-filter {expr}")
 
             if "-regexp" in option_combination:
                 pieces.append("-regexp")
@@ -367,18 +338,15 @@ def generate_get_pins():
             if "-quiet" in option_combination:
                 pieces.append("-quiet")
 
-            if "-of_objects" in option_combination:
-                #FIXME: Do not make this random.
-                #The name or list of nets or instances.
-                net_inst_list = random.choice(NETS + INSTANCES)
-                pieces.append(f"-of_objects {net_inst_list}")
+            pattern = generate_pattern("pin")
+            pieces.append(pattern)
 
-            if "patterns" in option_combination:
-                #A list of pin name patterns
-                pattern = generate_pattern("pin")
-                pieces.append(pattern)
-
-            commands.append(" ".join(pieces))
+            
+            #Join the options to create a proper command
+            pieces = " ".join(pieces)
+            #Add create_clock prerequisites
+            pieces = ("create_clock -period 10 -name clk [get_ports clk]\n" + pieces)
+            commands.append(pieces)
 
     return commands
 
