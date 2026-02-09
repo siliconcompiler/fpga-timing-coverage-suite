@@ -12,13 +12,12 @@ module async_fifo #(
     output wire wr_full, 
     
     input wire rd_clk, rd_rst_n, rd_inc,
-    output wire [DATA_WIDTH-1:0] rd_data, // [수정됨] reg -> wire
+    output wire [DATA_WIDTH-1:0] rd_data, 
     output wire rd_empty
 );
     wire [ADDR_WIDTH-1:0] wr_addr, rd_addr;
     wire [ADDR_WIDTH:0] wr_ptr, rd_ptr, wr_ptr_sync, rd_ptr_sync;
 
-    // [수정됨] 파라미터 명시적 지정으로 안전성 확보
     two_stage_ff #(.WIDTH(ADDR_WIDTH+1)) rd_to_wr (
         .clk(wr_clk), .rst_n(wr_rst_n), .data_in(rd_ptr), .data_synced(rd_ptr_sync)
     );
@@ -85,7 +84,7 @@ module two_stage_ff #(
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            q1 <= {WIDTH{1'b0}}; // [수정됨] 0 -> {WIDTH{1'b0}} (명확한 비트수 지정)
+            q1 <= {WIDTH{1'b0}}; 
             q2 <= {WIDTH{1'b0}};
         end
         else begin
@@ -152,7 +151,6 @@ module full_handler #(
     wire [ADDR_WIDTH:0] wr_bin_next, wr_gray_next;
     wire full_val;
     
-    // [수정됨] 복잡한 문장을 쪼개서 Yosys가 이해하기 쉽게 변경
     wire [ADDR_WIDTH:0] rd_ptr_inv;
     assign rd_ptr_inv = {~rd_ptr_sync[ADDR_WIDTH:ADDR_WIDTH-1], rd_ptr_sync[ADDR_WIDTH-2:0]};
 
