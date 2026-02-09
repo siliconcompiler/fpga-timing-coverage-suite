@@ -1,8 +1,11 @@
 /*
-set_max_delay: overrides default setup requirement
-
-sample SDC
-set_max_delay -from -to
+Circuit Name: barrel_shifter
+SDC Name: set_max_delay
+Description: 
+    -A configurable width barrel shifter circuit.
+    -'set_max_delay' will override the default setup requirement.
+    -By constraining the 'reg_data_out' with a max delay value, the PnR stage should try to optimize the implementation.
+    -The change in slack should be observed as the delay value changes. 
 */
 
 module barrel_shifter #(parameter DATA_WIDTH = 32)(
@@ -15,12 +18,7 @@ module barrel_shifter #(parameter DATA_WIDTH = 32)(
     reg [DATA_WIDTH-1:0] reg_data_in, reg_data_out;
     wire [DATA_WIDTH-1:0] data_shifted;
 
-    if (shift_left) begin
-        assign data_shifted = data << shift_amt;
-    end
-    else begin
-        assign data_shifted = data >> shift_amt;
-    end
+    assign data_shifted = shift_left ? data << shift_amt : data >> shift_amt;
 
     always @(posedge clk) begin
         reg_data_in <= data;

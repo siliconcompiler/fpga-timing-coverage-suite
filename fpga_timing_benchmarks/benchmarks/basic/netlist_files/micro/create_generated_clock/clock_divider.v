@@ -1,4 +1,17 @@
-module clk_dvdr_top(
+/*
+Circuit Name: clock_divider
+SDC Name: create_generated_clock
+Description: 
+    -Two 64-bit ripple carry adders are driven by two different clocks, 
+     where one is generated using another by a clock divider.
+    -'create_generated_clock' should tell the STA tool that the clock divider 
+     output signal is a clock signal, and is generated from an existing signal
+    -Without this constraint, the STA tool will consider the generated clock domain
+     as unconstrained.   
+*/
+
+// Top module
+module clock_divider(
     input wire          clk,
     input wire [63:0]   a, 
     input wire [63:0]   b, 
@@ -6,16 +19,17 @@ module clk_dvdr_top(
     output reg [63:0]   clk_sum,
     output reg [63:0]   gen_clk_sum
 );
+    // Wires and regs
     wire [63:0] sum1, sum2;
     wire cout1, cout2;
     wire gen_clk;
     reg [63:0] reg_a, reg_b;
     reg [63:0] reg_a_gen, reg_b_gen;
 
-    //Clock divider - gen_clock is half the frequency of clk
+    // Clock divider - gen_clock is half the frequency of clk
     clk_dvdr divider(.clk(clk), .gen_clk(gen_clk));
 
-    //Two 64-bit ripple carry adders timed by clk and gen_clk
+    // Two 64-bit ripple carry adders timed by clk and gen_clk
     rca_64 adder1(
         .a(reg_a), 
         .b(reg_b), 
@@ -32,7 +46,7 @@ module clk_dvdr_top(
         .cout(cout2)
         );
 
-    //Two clock domains
+    // Two clock domains
     always @(posedge clk) begin
         clk_sum <= sum1;
         reg_a <= a;
@@ -47,22 +61,28 @@ module clk_dvdr_top(
 
 endmodule 
 
-//Clock divider module
+// Clock divider module
 module clk_dvdr(
     input wire clk,
+    input wire n_rst,
     output wire gen_clk
 );
     reg q;
 
-    always @(posedge clk) begin
-        q <= ~q;
+    always @(posedge clk or negedge n_rst) begin
+        if (!n_rst) begin
+            q <= 1'b0;
+        end
+        else begin
+            q <= ~q;
+        end
     end
 
     assign gen_clk = q;
 endmodule
 
 
-//64-bit Adder and full adder modules
+// 64-bit Adder and full adder modules
 module rca_64(
     input [63:0]    a,
     input [63:0]    b,

@@ -1,7 +1,23 @@
 /*
-set_max_delay CDC
+Circuit Name: multiclock_cdc
+SDC Name: set_min_delay
+Description: 
+    -A 2-stage FF for asynchronous clock domain crossing.
+    -Instead of using 'set_clock_groups -asynchronous' or 'set_false_path' to constrain clock domain crossings, 
+     one can use 'set_min_delay' to constrain the data crossing two domains so that STA isn't blinded from timing 
+     violations that may occur in the design.
+    -'set_min_delay' overrides default hold requirements. Because the two clocks may possess uncertainties relative to each other,
+     hold violation is a risk when the data paths are too close to each other. Use the 'set_min_delay' constraint to account for the
+     potential jitter/uncertainty and ensure hold time is met. 
+    -The delay value should be chosen experimentally such that clock uncertainty will not result in hold violations.
+     (https://gist.github.com/brabect1/7695ead3d79be47576890bbcd61fe426)
+    -Examine the PnR results for different delay values to see how VTR reacts to this constraint.
 
-example SDC
+SDC Example:
+    create_clock -period 10.0 [get_ports clk_A]
+    create_clock -period 5.0  [get_ports clk_B]     
+
+    set_min_delay 0.5 -from [get_cells data_A_reg] -to [get_cells sync_ff1_reg]
 */
 
 module multiclock_cdc (

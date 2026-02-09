@@ -1,25 +1,30 @@
 /*
-https://vlsitutorials.com/constraining-multi-cycle-path-in-synthesis/https://vlsitutorials.com/constraining-multi-cycle-path-in-synthesis/
-
-allow multi cycles for 128-bit RCA
-See how Fmax changes with varying multicycles allowed for it
+Circuit Name: rca_32_128
+SDC Name: set_multicycle_path
+Description: 
+    -This circuit has one 32-bit adder and one 128-bit adder.
+    -Using the timing exception 'set_multicycle_path' on the 128-bit adder, the user should be able to observe changes in Fmax.
+    -Changing the number of cycles allowed for the path will lead to changes in Fmax.
 */
-
-module long_critical_path_top (
+// Top module
+module rca_32_128(
     input clk,
     input  [127:0] a_128,
     input  [127:0] b_128,
     input  [31:0] a_32,
-    input  [31:0] b_32;
-    output [127:0] y_128;
-    output [31:0] y_32;
+    input  [31:0] b_32,
+    output reg [127:0] y_128,
+    output reg [31:0] y_32
 );
+    // Wire and reg for 128-bit adder
     wire [127:0] sum_128;
-    reg [127:0] reg_a_128, reg_b_128, y_128;
+    reg [127:0] reg_a_128, reg_b_128;
 
+    // Wire and reg for 32-bit adder
     wire [31:0] sum_32;
-    reg [31:0] reg_a_32, reg_b_32, y_32;
+    reg [31:0] reg_a_32, reg_b_32;
 
+    // Input and output are both registered
     always @(posedge clk) begin
         reg_a_128 <= a_128;
         reg_b_128 <= b_128;
@@ -43,16 +48,7 @@ module long_critical_path_top (
 
 endmodule
 
-module dff_128(
-    input wire clk,
-    input wire [127:0] d, 
-    output reg [127:0] q
-);
-    always @(posedge clk) begin
-        q <= d;
-    end
-endmodule
-
+// 1-bit FA module
 module full_adder(
     input wire a,
     input wire b,
@@ -64,6 +60,8 @@ module full_adder(
     assign cout = (a & b) | (cin & (a ^ b));
 endmodule
 
+// 128-bit ripple carry adder
+// Final carry is discarded for simplicity
 module ripple_adder_128 (
     input  [127:0] a,
     input  [127:0] b,
@@ -86,6 +84,8 @@ module ripple_adder_128 (
     endgenerate
 endmodule
 
+// 32-bit adder
+// Final carry is discarded for simplicity
 module ripple_adder_32(
     input [31:0] a,
     input [31:0] b,

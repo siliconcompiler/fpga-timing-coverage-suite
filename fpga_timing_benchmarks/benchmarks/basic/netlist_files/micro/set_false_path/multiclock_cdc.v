@@ -1,7 +1,10 @@
 /*
-set_max_delay CDC
-
-example SDC
+Circuit Name: multiclock_cdc
+SDC Name: set_false_path
+Description: 
+    -A 2-stage FF for asynchronous clock domain crossing
+    -Setting a false path between the clock domains will tell the STA tool to ignore the said path
+    -No timing violations will be reported for the false paths
 */
 
 module multiclock_cdc (

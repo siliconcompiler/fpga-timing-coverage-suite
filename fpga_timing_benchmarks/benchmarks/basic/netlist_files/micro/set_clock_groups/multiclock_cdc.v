@@ -1,16 +1,11 @@
-set_max_delay에 CDC (handshake) 추가
-set_mind_delay는 뭐가 좋을지 고민. A circuit that requires hold time. A circuit that has a long combinational path so it requires a long propagation path. 
-set_min_delay tells the tool to ensure the data doesn't arrive to early
-Maybe a dummy pipeline of a simple ALU can do the job (the EX stage of a processor)
-
-
-set_max_delay: barrel shifter, CDC, 
-set_min_delay: very fast pipeline, CDC
-
-few elements between two sequential elements: if clock latency is high, data from the previous cycle may arrive too fast (maybe in the same clock cycle) It would be nice to actually run the fully implemented circuit
-
 /*
-
+Circuit Name: multiclock_cdc
+SDC Name: set_clock_groups
+Description: 
+    -A 2-stage FF for asynchronous clock domain crossing
+    -Creating separate groups for each clock domain and declaring them asynchronous
+     will notify the STA tool to skip unnecessary analysis between the two domains
+    -set_clock_groups has a higher precedence than set_false_path
 */
 
 module multiclock_cdc (

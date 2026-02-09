@@ -1,11 +1,22 @@
 /*
-set_clock_groups
+Circuit Name: multiclock_cdc
+SDC Name: set_max_delay
+Description: 
+    -A 2-stage FF for asynchronous clock domain crossing.
+    -Instead of using 'set_clock_groups -asynchronous' or 'set_false_path' to constrain clock domain crossings, 
+     one can use 'set_max_delay' to constrain the data crossing two domains so that STA isn't blinded from timing 
+     violations that may occur in the design.
+    -The delay value should be chosen so that the path will meet timing without relaxing it too much. The delay 
+     value is to be chosen experimentally for each technology. A good rule of thumb is to use the clock period for 
+     the max delay value, or choosing the minimum of the source and destination clock. 
+     (https://docs.amd.com/r/en-US/ug949-vivado-design-methodology/Constraints-on-Individual-CDC-Paths)
+    -Examine the PnR results for different delay values to see how VTR reacts to this constraint. 
 
-example SDC:
-create_clock -name clk_A -period 
-create_clock -name clk_B -period 
+SDC Example:
+    create_clock -period 10.0 [get_ports clk_A]
+    create_clock -period 5.0  [get_ports clk_B]     
 
-set_clock_groups -group clk_A -group clk_B -asynchronous
+    set_max_delay 5.0 -from [get_cells data_A_reg] -to [get_cells sync_ff1_reg]
 */
 
 module multiclock_cdc (
