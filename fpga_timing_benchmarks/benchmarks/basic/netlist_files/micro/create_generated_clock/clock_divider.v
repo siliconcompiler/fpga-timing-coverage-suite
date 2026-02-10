@@ -13,6 +13,7 @@ Description:
 // Top module
 module clock_divider(
     input wire          clk,
+    input wire          n_rst,
     input wire [63:0]   a, 
     input wire [63:0]   b, 
     input wire          cin,
@@ -27,7 +28,7 @@ module clock_divider(
     reg [63:0] reg_a_gen, reg_b_gen;
 
     // Clock divider - gen_clock is half the frequency of clk
-    clk_dvdr divider(.clk(clk), .gen_clk(gen_clk));
+    clk_dvdr divider(.clk(clk), .n_rst(n_rst), .gen_clk(gen_clk));
 
     // Two 64-bit ripple carry adders timed by clk and gen_clk
     rca_64 adder1(
@@ -96,7 +97,7 @@ module rca_64(
 
     genvar i;
     generate
-        for(i = 0; i < 63; i = i + 1) begin : rca
+        for(i = 0; i < 64; i = i + 1) begin : rca
             fa u_fa(
                 .a   (a[i]), 
                 .b   (b[i]), 

@@ -61,7 +61,7 @@ module adder_64bit(
 
     genvar i;
     generate
-        for(i = 0; i < 63; i = i + 1) begin : rca
+        for(i = 0; i < 64; i = i + 1) begin : rca
             fa u_fa(
                 .a   (a[i]), 
                 .b   (b[i]), 

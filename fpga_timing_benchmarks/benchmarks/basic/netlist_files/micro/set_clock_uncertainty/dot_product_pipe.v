@@ -158,12 +158,13 @@ module control(
                 IDLE: begin
                     counter <= 0;
                     in_valid <= 0;
-                    done <= 0;
+                    done <= 0; 
                 end
                 COMPUTE: begin
-                    counter <= counter + 1;
+                    if (curr_state == IDLE) counter <= 0; // start counter from 0 in the first stage of COMPUTE
+                    else counter <= counter + 1; // increment counter after first stage
                     in_valid <= 1;
-                    done <= (counter == num_col - 1) ? 1 : 0;
+                    done <= (counter == num_col - 1) ? 1 : 0; // done = 1 at the final stage of COMPUTE
                 end
             endcase
         end

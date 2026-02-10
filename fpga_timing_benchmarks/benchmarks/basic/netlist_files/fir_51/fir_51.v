@@ -6,7 +6,7 @@ module fir_51 (
     input wire clk,
     input wire rst_n,
     input wire signed [15:0] data_in,
-    output reg signed [15:0] data_out
+    output reg signed [37:0] data_out
 );
     //Coefficient ROM
     reg signed [15:0] coeff [0:50];
@@ -67,7 +67,7 @@ module fir_51 (
 
     //Systolic FIR Logic
     integer i;
-    reg signed [15:0] sum [0:50];
+    reg signed [37:0] sum [0:50];
 
     always @(posedge clk or negedge rst_n) begin
         if(!rst_n) begin 

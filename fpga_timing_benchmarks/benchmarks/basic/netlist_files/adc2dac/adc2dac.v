@@ -1,6 +1,7 @@
 /*
 adc2dac
-*/module adc_to_dac(
+*/
+module adc_to_dac(
     input clk,
     input [7:0] adc_data,
     output reg [7:0] dac_data

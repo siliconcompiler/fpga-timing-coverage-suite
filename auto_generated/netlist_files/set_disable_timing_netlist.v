@@ -13,7 +13,7 @@ module set_disable_timing(
     input wire clk,
     input wire d_in_1,
     input wire d_in_2,
-    output reg d_out_1, 
+    output wire d_out_1, 
     output reg d_out_2
 );
     comb u1(.a(d_in_1), .b(d_in_2), .y(d_out_1));

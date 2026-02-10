@@ -55,11 +55,12 @@ module fifo_mem #(
     input wire [ADDR_WIDTH-1:0] wr_addr, rd_addr,
     output wire [DATA_WIDTH-1:0] rd_data
 );
-    (* mem2reg *)
+    
     localparam DEPTH = (1 << ADDR_WIDTH);
-
+    
+    (* mem2reg *)
     reg [DATA_WIDTH-1:0] mem [DEPTH-1:0];
-    initial mem[0] <= 255;
+    initial mem[0] = 255;
 
     assign rd_data = mem[rd_addr];
 

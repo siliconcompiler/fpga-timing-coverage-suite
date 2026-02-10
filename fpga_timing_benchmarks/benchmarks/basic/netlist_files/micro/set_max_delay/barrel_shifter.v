@@ -18,7 +18,7 @@ module barrel_shifter #(parameter DATA_WIDTH = 32)(
     reg [DATA_WIDTH-1:0] reg_data_in, reg_data_out;
     wire [DATA_WIDTH-1:0] data_shifted;
 
-    assign data_shifted = shift_left ? data << shift_amt : data >> shift_amt;
+    assign data_shifted = shift_left ? reg_data_in << shift_amt : reg_data_in >> shift_amt;
 
     always @(posedge clk) begin
         reg_data_in <= data;
