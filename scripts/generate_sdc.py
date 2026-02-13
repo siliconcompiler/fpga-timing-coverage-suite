@@ -518,7 +518,6 @@ def generate_set_output_delay():
 
                 if "-clock" in option_combination:
                     #TODO: Might be [get_clocks src_clk]
-                    clk = random.choice(CLOCKS)
                     pieces.append(f"-clock [get_clocks src_clk]")
 
                 if "-clock_fall" in option_combination:
@@ -1738,7 +1737,7 @@ def generate_set_disable_timing():
     to_port = ["[get_ports d_out_1]", "[get_ports d_out_2]"]
     objects = ["comb", "u1", "[get_ports d_in_1]", "[get_pins u1/a]"] #Cells, Instances, Ports, Pins
     
-    for i in range(2):
+    for _ in range(2): # Number of total constraint generations
         for i in range(len(optional_options) + 1):
             for option_combination in combinations(optional_options, i):
                 
