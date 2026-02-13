@@ -72,7 +72,7 @@ module fir_51 (
     always @(posedge clk or negedge rst_n) begin
         if(!rst_n) begin 
             for(i = 0; i < 51; i = i + 1) begin
-                sum[i] <= 16'b0;
+                sum[i] <= 38'b0;
             end
             data_out <= 16'b0;
         end
