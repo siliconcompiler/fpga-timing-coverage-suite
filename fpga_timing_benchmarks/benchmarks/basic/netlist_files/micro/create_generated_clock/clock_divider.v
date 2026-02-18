@@ -2,36 +2,36 @@
 Circuit Name: clock_divider
 SDC Name: create_generated_clock
 Description: 
-    -Two 64-bit ripple carry adders are driven by two different clocks, 
+    -Two ripple carry adders are driven by two different clocks, 
      where one is generated using another by a clock divider.
     -'create_generated_clock' should tell the STA tool that the clock divider 
      output signal is a clock signal, and is generated from an existing signal
     -Without this constraint, the STA tool will consider the generated clock domain
-     as unconstrained.   
+     as unconstrained.
 */
 
 // Top module
-module clock_divider(
+module clock_divider #(parameter WIDTH = 64)(
     input wire          clk,
     input wire          n_rst,
-    input wire [63:0]   a, 
-    input wire [63:0]   b, 
+    input wire [WIDTH-1:0]   a, 
+    input wire [WIDTH-1:0]   b, 
     input wire          cin,
-    output reg [63:0]   clk_sum,
-    output reg [63:0]   gen_clk_sum
+    output reg [WIDTH-1:0]   clk_sum,
+    output reg [WIDTH-1:0]   gen_clk_sum
 );
     // Wires and regs
-    wire [63:0] sum1, sum2;
+    wire [WIDTH-1:0] sum1, sum2;
     wire cout1, cout2;
     wire gen_clk;
-    reg [63:0] reg_a, reg_b;
-    reg [63:0] reg_a_gen, reg_b_gen;
+    reg [WIDTH-1:0] reg_a, reg_b;
+    reg [WIDTH-1:0] reg_a_gen, reg_b_gen;
 
     // Clock divider - gen_clock is half the frequency of clk
     clk_dvdr divider(.clk(clk), .n_rst(n_rst), .gen_clk(gen_clk));
 
-    // Two 64-bit ripple carry adders timed by clk and gen_clk
-    rca_64 adder1(
+    // Two ripple carry adders timed by clk and gen_clk
+    ripple_adder #(.WIDTH(WIDTH)) adder1(
         .a(reg_a), 
         .b(reg_b), 
         .cin(cin), 
@@ -39,7 +39,7 @@ module clock_divider(
         .cout(cout1)
         );
 
-    rca_64 adder2(
+    ripple_adder #(.WIDTH(WIDTH)) adder2(
         .a(reg_a_gen), 
         .b(reg_b_gen), 
         .cin(cin), 
@@ -83,21 +83,21 @@ module clk_dvdr(
 endmodule
 
 
-// 64-bit Adder and full adder modules
-module rca_64(
-    input [63:0]    a,
-    input [63:0]    b,
+// Variable width adder and full adder modules
+module ripple_adder #(parameter WIDTH = 64)(
+    input [WIDTH-1:0]    a,
+    input [WIDTH-1:0]    b,
     input           cin,
-    output [63:0]   sum,
+    output [WIDTH-1:0]   sum,
     output          cout
 );
 
-    wire [64:0] carry;
+    wire [WIDTH:0] carry;
     assign carry[0] = cin;
 
     genvar i;
     generate
-        for(i = 0; i < 64; i = i + 1) begin : rca
+        for(i = 0; i < WIDTH; i = i + 1) begin : rca
             fa u_fa(
                 .a   (a[i]), 
                 .b   (b[i]), 
@@ -108,7 +108,7 @@ module rca_64(
         end
     endgenerate
 
-    assign cout = carry[64];
+    assign cout = carry[WIDTH];
 
 endmodule
 

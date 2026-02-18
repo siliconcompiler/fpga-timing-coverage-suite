@@ -20,11 +20,11 @@ SDC Example:
     set_min_delay 0.5 -from [get_cells data_A_reg] -to [get_cells sync_ff1_reg]
 */
 
-module multiclock_cdc (
+module multiclock_cdc #(parameter WIDTH = 4)(
     // Domain A (Source)
     input wire clk_A,
     input wire reset_A,
-    output reg [3:0] count_A,
+    output reg [WIDTH-1:0] count_A,
 
     // Domain B (Destination)
     input wire clk_B,
@@ -39,7 +39,7 @@ reg data_A;
 
 always @(posedge clk_A or posedge reset_A) begin
     if (reset_A) begin
-        count_A <= 4'b0;
+        count_A <= 0;
     end
     else begin
         count_A <= count_A + 1'b1;
@@ -49,7 +49,7 @@ end
 // data_A is the MSB of the counter (changes every 8 cycles)
 // This is the single-bit signal crossing the clock boundary.
 always @(posedge clk_A) begin
-    data_A <= count_A[3];
+    data_A <= count_A[WIDTH-1];
 end
 
 // --- 2. Two-Flip-Flop (2-FF) Synchronizer ---

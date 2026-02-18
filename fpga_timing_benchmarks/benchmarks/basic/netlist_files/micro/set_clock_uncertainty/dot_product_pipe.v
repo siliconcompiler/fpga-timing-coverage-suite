@@ -2,7 +2,7 @@
 Circuit Name: dot_product_pipe
 SDC Name: set_clock_uncertainty
 Description: 
-    -This circuit multiplies a 1x16 vector with each column of a 16xN matrix (0 < N < 32)
+    -This circuit computes the product of a 1x(VEC_DIM) vector and each column of a (VEC_DIM)x(COL_NUM) matrix
     -Each column of the matrix is broadcast one by one by an external unit
     -There are two states for the control state machine - IDLE and COMPUTE
     -Set a loose clock period and constrain the circuit with 'set_clock_uncertainty'
@@ -10,30 +10,30 @@ Description:
 */
 
 // Top module
-module dot_product_pipe(
+module dot_product_pipe #(parameter VEC_DIM = 16, COL_NUM_WIDTH = 5, OWIDTH = $clog2(VEC_DIM)+1)(
     input clk,
     input n_rst,
     input start, // Changes the control state to 'COMPUTE'
-    input [4:0] num_col, // Number of columns of the matrix
-    input [15:0] vec,
-    input [15:0] col,
+    input [COL_NUM_WIDTH-1:0] num_col, // Number of columns of the matrix
+    input [VEC_DIM-1:0] vec,
+    input [VEC_DIM-1:0] col,
     output valid, // Valid flag for the output
     output mul_done, // Indicates if all columns have been computed
-    output [4:0] out
+    output [OWIDTH-1:0] out
 );
     // Wires
-    wire [4:0] scalar_out;
+    wire [OWIDTH-1:0] scalar_out;
     wire in_valid, done;
 
     // Vector multiplier unit
-    vector_multiplier u_vec_mul(
+    vector_multiplier #(.VEC_DIM(VEC_DIM), .OWIDTH(OWIDTH)) u_vec_mul (
         .vec(vec_in_reg),
         .col(col_in_reg),
         .out(scalar_out)
     );
 
     // Control FSM
-    control u_ctrl(
+    control #(.COL_NUM_WIDTH(COL_NUM_WIDTH)) u_ctrl (
         .clk(clk),
         .n_rst(n_rst),
         .start(start),
@@ -43,7 +43,7 @@ module dot_product_pipe(
     );
 
     // Pipeline Stage 1: Input is registered
-    reg [15:0] vec_in_reg, col_in_reg;
+    reg [VEC_DIM-1:0] vec_in_reg, col_in_reg;
     reg valid_stage1, done_stage1; 
     
     always @(posedge clk or negedge n_rst) begin
@@ -62,7 +62,7 @@ module dot_product_pipe(
     end
 
     // Pipeline Stage 2: Output is registered
-    reg [4:0] scalar_out_reg;
+    reg [OWIDTH-1:0] scalar_out_reg;
     reg valid_stage2, done_stage2;
 
     always @(posedge clk or negedge n_rst) begin
@@ -84,30 +84,30 @@ module dot_product_pipe(
 
 endmodule
 
-// Vector multiplier 
-module vector_multiplier(
-    input [15:0] vec,
-    input [15:0] col,
-    output [4:0] out
+// Vector multiplier (Binary dot product)
+module vector_multiplier #(parameter VEC_DIM = 16, OWIDTH = $clog2(VEC_DIM)+1)(
+    input [VEC_DIM-1:0] vec,
+    input [VEC_DIM-1:0] col,
+    output reg [OWIDTH-1:0] out
 );
-    wire [15:0] element_product;
-
-    // Element-wise AND operation of two vectors
-    assign element_product = vec & col; 
-
+    integer i;
     // Accumulation of all element-wise products
-    assign out = element_product[0] + element_product[1] + element_product[2] + element_product[3] +
-            element_product[4] + element_product[5] + element_product[6] + element_product[7] +
-            element_product[8] + element_product[9] + element_product[10] + element_product[11] +
-            element_product[12] + element_product[13] + element_product[14] + element_product[15];
+    always @(*) begin
+        out = 0;
+        for (i = 0; i < VEC_DIM; i = i + 1) begin
+            if (vec[i] & col[i]) begin 
+              out = out + 1'b1;
+            end
+        end
+    end
 endmodule
 
 // Control FSM
-module control(
+module control #(parameter COL_NUM_WIDTH = 5)(
     input clk,
     input n_rst,
     input start,
-    input [4:0] num_col,
+    input [COL_NUM_WIDTH-1:0] num_col,
     output reg in_valid,
     output reg done
 );
@@ -119,7 +119,7 @@ module control(
     reg curr_state, next_state;
 
     // Counter register
-    reg [4:0] counter; 
+    reg [COL_NUM_WIDTH-1:0] counter; 
 
     // State transition
     always @(posedge clk or negedge n_rst) begin

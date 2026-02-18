@@ -2,7 +2,7 @@
 Circuit Name: skewed_clock
 SDC Name: set_clock_latency
 Description: 
-    -Two synchronous, but out-of-phase clocks are driving different 64-bit registers. 
+    -Two synchronous, but out-of-phase clocks are driving different multi-bit registers. 
     -Use 'set_clock_latency' to specify different latencies for each clock pin.
     -The combinational path between the registers is subject to STA. The change in slack should be reported.
 
@@ -17,23 +17,23 @@ SDC example:
     set_output_delay -clock clk 0 [get_ports {sum[*]}]
 */
 // Top module
-module skewed_clock(
+module skewed_clock #(parameter WIDTH = 64)(
     input clk,
-    input [63:0] a, 
-    input [63:0] b,
-    output [63:0] sum
+    input [WIDTH-1:0] a, 
+    input [WIDTH-1:0] b,
+    output [WIDTH-1:0] sum
 );
-    wire [63:0] wire_a, wire_b;
-    wire [63:0] fa_out;
+    wire [WIDTH-1:0] wire_a, wire_b;
+    wire [WIDTH-1:0] fa_out;
 
     // Registers for input a and b
-    dff_64 reg_a(
+    dff #(.WIDTH(WIDTH)) reg_a(
         .clk(clk),
         .D(a),
         .Q(wire_a)
     );
 
-    dff_64 reg_b(
+    dff #(.WIDTH(WIDTH)) reg_b(
         .clk(clk),
         .D(b),
         .Q(wire_b)
@@ -43,7 +43,7 @@ module skewed_clock(
     assign fa_out = wire_a + wire_b;
 
     // Register for the sum
-    dff_64 reg_sum(
+    dff #(.WIDTH(WIDTH)) reg_sum(
         .clk(clk),
         .D(fa_out),
         .Q(sum)
@@ -51,11 +51,11 @@ module skewed_clock(
 
 endmodule
 
-// 64-bit DFF
-module dff_64(
+// multi-bit DFF
+module dff #(parameter WIDTH = 64)(
     input clk,
-    input [63:0] D,
-    output reg [63:0] Q
+    input [WIDTH-1:0] D,
+    output reg [WIDTH-1:0] Q
 );
     always @(posedge clk) begin
         Q <= D;
