@@ -1,0 +1,753 @@
+.model async_fifo
+.inputs async_fifo^wr_clk async_fifo^wr_rst_n async_fifo^wr_inc async_fifo^wr_data~0 async_fifo^wr_data~1 async_fifo^wr_data~2 async_fifo^wr_data~3 async_fifo^wr_data~4 async_fifo^wr_data~5 async_fifo^wr_data~6 async_fifo^wr_data~7 async_fifo^rd_clk async_fifo^rd_rst_n async_fifo^rd_inc
+.outputs async_fifo^wr_full async_fifo^rd_data~0 async_fifo^rd_data~1 async_fifo^rd_data~2 async_fifo^rd_data~3 async_fifo^rd_data~4 async_fifo^rd_data~5 async_fifo^rd_data~6 async_fifo^rd_data~7 async_fifo^rd_empty
+
+.names gnd
+.names unconn
+.names vcc
+1
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.empty_unit^rd_ptr~0_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~193
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~193 async_fifo.rd_to_wr^q1~0_FF re async_fifo^wr_clk 3
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.rd_to_wr^q1~0_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~198
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~198 async_fifo.rd_to_wr^q2~0_FF re async_fifo^wr_clk 3
+
+.names async_fifo.full_unit^bXOR~78^lXOR~164 async_fifo.rd_to_wr^q2~0_FF async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~186
+00 1
+11 1
+
+.names async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~186 async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~187 async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~188 async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~189 async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~190 async_fifo.full_unit^lEQ~84^lAND~185
+11111 1
+
+.names async_fifo.full_unit^lNOT~87 async_fifo.full_unit^nMUX~86^lNOT~88 gnd async_fifo.full_unit^lEQ~84^lAND~185 async_fifo.full_unit^nMUX~86^MUX_2~183
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~86^MUX_2~183 async_fifo.full_unit^wr_full_FF re async_fifo^wr_clk 3
+
+.names async_fifo.full_unit^wr_full_FF async_fifo.fifomem^lNOT~26
+0 1
+
+.names async_fifo.fifomem^lNOT~26 async_fifo.fifomem^lAND~27^bOR~104^lOR~106
+1 1
+
+.names async_fifo.fifomem^lAND~27^bOR~103^lOR~105 async_fifo.fifomem^lAND~27^bOR~104^lOR~106 async_fifo.fifomem^lAND~27^lAND~102
+11 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo.full_unit^wr_bin~0_FF gnd async_fifo.fifomem^nMUX~25^MUX_2~89
+1-1- 1
+-1-1 1
+
+
+.subckt dual_port_ram addr1[0]=async_fifo.empty_unit^rd_bin~0_FF\
+ addr1[1]=async_fifo.empty_unit^rd_bin~1_FF\
+ addr1[2]=async_fifo.empty_unit^rd_bin~2_FF\
+ addr1[3]=async_fifo.empty_unit^rd_bin~3_FF addr1[4]=unconn addr1[5]=unconn\
+ addr1[6]=unconn addr1[7]=unconn addr1[8]=unconn addr1[9]=unconn\
+ addr1[10]=unconn addr1[11]=unconn addr1[12]=unconn addr1[13]=unconn\
+ addr1[14]=unconn addr2[0]=async_fifo.fifomem^nMUX~25^MUX_2~89\
+ addr2[1]=async_fifo.fifomem^nMUX~25^MUX_2~90\
+ addr2[2]=async_fifo.fifomem^nMUX~25^MUX_2~91\
+ addr2[3]=async_fifo.fifomem^nMUX~25^MUX_2~92 addr2[4]=unconn addr2[5]=unconn\
+ addr2[6]=unconn addr2[7]=unconn addr2[8]=unconn addr2[9]=unconn\
+ addr2[10]=unconn addr2[11]=unconn addr2[12]=unconn addr2[13]=unconn\
+ addr2[14]=unconn data2=async_fifo.fifomem^nMUX~25^MUX_2~100\
+ we2=async_fifo.fifomem^nMUX~25^MUX_2~101 clk=async_fifo^wr_clk data1=gnd\
+ we1=gnd out1=async_fifo.fifomem.mem^out1~7\
+ out2=dummy_implicit_memory_output~7
+
+
+.subckt dual_port_ram addr1[0]=async_fifo.empty_unit^rd_bin~0_FF\
+ addr1[1]=async_fifo.empty_unit^rd_bin~1_FF\
+ addr1[2]=async_fifo.empty_unit^rd_bin~2_FF\
+ addr1[3]=async_fifo.empty_unit^rd_bin~3_FF addr1[4]=unconn addr1[5]=unconn\
+ addr1[6]=unconn addr1[7]=unconn addr1[8]=unconn addr1[9]=unconn\
+ addr1[10]=unconn addr1[11]=unconn addr1[12]=unconn addr1[13]=unconn\
+ addr1[14]=unconn addr2[0]=async_fifo.fifomem^nMUX~25^MUX_2~89\
+ addr2[1]=async_fifo.fifomem^nMUX~25^MUX_2~90\
+ addr2[2]=async_fifo.fifomem^nMUX~25^MUX_2~91\
+ addr2[3]=async_fifo.fifomem^nMUX~25^MUX_2~92 addr2[4]=unconn addr2[5]=unconn\
+ addr2[6]=unconn addr2[7]=unconn addr2[8]=unconn addr2[9]=unconn\
+ addr2[10]=unconn addr2[11]=unconn addr2[12]=unconn addr2[13]=unconn\
+ addr2[14]=unconn data2=async_fifo.fifomem^nMUX~25^MUX_2~93\
+ we2=async_fifo.fifomem^nMUX~25^MUX_2~101 clk=async_fifo^wr_clk data1=gnd\
+ we1=gnd out1=async_fifo.fifomem.mem^out1~0\
+ out2=dummy_implicit_memory_output~0
+
+
+.subckt dual_port_ram addr1[0]=async_fifo.empty_unit^rd_bin~0_FF\
+ addr1[1]=async_fifo.empty_unit^rd_bin~1_FF\
+ addr1[2]=async_fifo.empty_unit^rd_bin~2_FF\
+ addr1[3]=async_fifo.empty_unit^rd_bin~3_FF addr1[4]=unconn addr1[5]=unconn\
+ addr1[6]=unconn addr1[7]=unconn addr1[8]=unconn addr1[9]=unconn\
+ addr1[10]=unconn addr1[11]=unconn addr1[12]=unconn addr1[13]=unconn\
+ addr1[14]=unconn addr2[0]=async_fifo.fifomem^nMUX~25^MUX_2~89\
+ addr2[1]=async_fifo.fifomem^nMUX~25^MUX_2~90\
+ addr2[2]=async_fifo.fifomem^nMUX~25^MUX_2~91\
+ addr2[3]=async_fifo.fifomem^nMUX~25^MUX_2~92 addr2[4]=unconn addr2[5]=unconn\
+ addr2[6]=unconn addr2[7]=unconn addr2[8]=unconn addr2[9]=unconn\
+ addr2[10]=unconn addr2[11]=unconn addr2[12]=unconn addr2[13]=unconn\
+ addr2[14]=unconn data2=async_fifo.fifomem^nMUX~25^MUX_2~94\
+ we2=async_fifo.fifomem^nMUX~25^MUX_2~101 clk=async_fifo^wr_clk data1=gnd\
+ we1=gnd out1=async_fifo.fifomem.mem^out1~1\
+ out2=dummy_implicit_memory_output~1
+
+
+.subckt dual_port_ram addr1[0]=async_fifo.empty_unit^rd_bin~0_FF\
+ addr1[1]=async_fifo.empty_unit^rd_bin~1_FF\
+ addr1[2]=async_fifo.empty_unit^rd_bin~2_FF\
+ addr1[3]=async_fifo.empty_unit^rd_bin~3_FF addr1[4]=unconn addr1[5]=unconn\
+ addr1[6]=unconn addr1[7]=unconn addr1[8]=unconn addr1[9]=unconn\
+ addr1[10]=unconn addr1[11]=unconn addr1[12]=unconn addr1[13]=unconn\
+ addr1[14]=unconn addr2[0]=async_fifo.fifomem^nMUX~25^MUX_2~89\
+ addr2[1]=async_fifo.fifomem^nMUX~25^MUX_2~90\
+ addr2[2]=async_fifo.fifomem^nMUX~25^MUX_2~91\
+ addr2[3]=async_fifo.fifomem^nMUX~25^MUX_2~92 addr2[4]=unconn addr2[5]=unconn\
+ addr2[6]=unconn addr2[7]=unconn addr2[8]=unconn addr2[9]=unconn\
+ addr2[10]=unconn addr2[11]=unconn addr2[12]=unconn addr2[13]=unconn\
+ addr2[14]=unconn data2=async_fifo.fifomem^nMUX~25^MUX_2~95\
+ we2=async_fifo.fifomem^nMUX~25^MUX_2~101 clk=async_fifo^wr_clk data1=gnd\
+ we1=gnd out1=async_fifo.fifomem.mem^out1~2\
+ out2=dummy_implicit_memory_output~2
+
+
+.subckt dual_port_ram addr1[0]=async_fifo.empty_unit^rd_bin~0_FF\
+ addr1[1]=async_fifo.empty_unit^rd_bin~1_FF\
+ addr1[2]=async_fifo.empty_unit^rd_bin~2_FF\
+ addr1[3]=async_fifo.empty_unit^rd_bin~3_FF addr1[4]=unconn addr1[5]=unconn\
+ addr1[6]=unconn addr1[7]=unconn addr1[8]=unconn addr1[9]=unconn\
+ addr1[10]=unconn addr1[11]=unconn addr1[12]=unconn addr1[13]=unconn\
+ addr1[14]=unconn addr2[0]=async_fifo.fifomem^nMUX~25^MUX_2~89\
+ addr2[1]=async_fifo.fifomem^nMUX~25^MUX_2~90\
+ addr2[2]=async_fifo.fifomem^nMUX~25^MUX_2~91\
+ addr2[3]=async_fifo.fifomem^nMUX~25^MUX_2~92 addr2[4]=unconn addr2[5]=unconn\
+ addr2[6]=unconn addr2[7]=unconn addr2[8]=unconn addr2[9]=unconn\
+ addr2[10]=unconn addr2[11]=unconn addr2[12]=unconn addr2[13]=unconn\
+ addr2[14]=unconn data2=async_fifo.fifomem^nMUX~25^MUX_2~96\
+ we2=async_fifo.fifomem^nMUX~25^MUX_2~101 clk=async_fifo^wr_clk data1=gnd\
+ we1=gnd out1=async_fifo.fifomem.mem^out1~3\
+ out2=dummy_implicit_memory_output~3
+
+
+.subckt dual_port_ram addr1[0]=async_fifo.empty_unit^rd_bin~0_FF\
+ addr1[1]=async_fifo.empty_unit^rd_bin~1_FF\
+ addr1[2]=async_fifo.empty_unit^rd_bin~2_FF\
+ addr1[3]=async_fifo.empty_unit^rd_bin~3_FF addr1[4]=unconn addr1[5]=unconn\
+ addr1[6]=unconn addr1[7]=unconn addr1[8]=unconn addr1[9]=unconn\
+ addr1[10]=unconn addr1[11]=unconn addr1[12]=unconn addr1[13]=unconn\
+ addr1[14]=unconn addr2[0]=async_fifo.fifomem^nMUX~25^MUX_2~89\
+ addr2[1]=async_fifo.fifomem^nMUX~25^MUX_2~90\
+ addr2[2]=async_fifo.fifomem^nMUX~25^MUX_2~91\
+ addr2[3]=async_fifo.fifomem^nMUX~25^MUX_2~92 addr2[4]=unconn addr2[5]=unconn\
+ addr2[6]=unconn addr2[7]=unconn addr2[8]=unconn addr2[9]=unconn\
+ addr2[10]=unconn addr2[11]=unconn addr2[12]=unconn addr2[13]=unconn\
+ addr2[14]=unconn data2=async_fifo.fifomem^nMUX~25^MUX_2~97\
+ we2=async_fifo.fifomem^nMUX~25^MUX_2~101 clk=async_fifo^wr_clk data1=gnd\
+ we1=gnd out1=async_fifo.fifomem.mem^out1~4\
+ out2=dummy_implicit_memory_output~4
+
+
+.subckt dual_port_ram addr1[0]=async_fifo.empty_unit^rd_bin~0_FF\
+ addr1[1]=async_fifo.empty_unit^rd_bin~1_FF\
+ addr1[2]=async_fifo.empty_unit^rd_bin~2_FF\
+ addr1[3]=async_fifo.empty_unit^rd_bin~3_FF addr1[4]=unconn addr1[5]=unconn\
+ addr1[6]=unconn addr1[7]=unconn addr1[8]=unconn addr1[9]=unconn\
+ addr1[10]=unconn addr1[11]=unconn addr1[12]=unconn addr1[13]=unconn\
+ addr1[14]=unconn addr2[0]=async_fifo.fifomem^nMUX~25^MUX_2~89\
+ addr2[1]=async_fifo.fifomem^nMUX~25^MUX_2~90\
+ addr2[2]=async_fifo.fifomem^nMUX~25^MUX_2~91\
+ addr2[3]=async_fifo.fifomem^nMUX~25^MUX_2~92 addr2[4]=unconn addr2[5]=unconn\
+ addr2[6]=unconn addr2[7]=unconn addr2[8]=unconn addr2[9]=unconn\
+ addr2[10]=unconn addr2[11]=unconn addr2[12]=unconn addr2[13]=unconn\
+ addr2[14]=unconn data2=async_fifo.fifomem^nMUX~25^MUX_2~98\
+ we2=async_fifo.fifomem^nMUX~25^MUX_2~101 clk=async_fifo^wr_clk data1=gnd\
+ we1=gnd out1=async_fifo.fifomem.mem^out1~5\
+ out2=dummy_implicit_memory_output~5
+
+
+.subckt dual_port_ram addr1[0]=async_fifo.empty_unit^rd_bin~0_FF\
+ addr1[1]=async_fifo.empty_unit^rd_bin~1_FF\
+ addr1[2]=async_fifo.empty_unit^rd_bin~2_FF\
+ addr1[3]=async_fifo.empty_unit^rd_bin~3_FF addr1[4]=unconn addr1[5]=unconn\
+ addr1[6]=unconn addr1[7]=unconn addr1[8]=unconn addr1[9]=unconn\
+ addr1[10]=unconn addr1[11]=unconn addr1[12]=unconn addr1[13]=unconn\
+ addr1[14]=unconn addr2[0]=async_fifo.fifomem^nMUX~25^MUX_2~89\
+ addr2[1]=async_fifo.fifomem^nMUX~25^MUX_2~90\
+ addr2[2]=async_fifo.fifomem^nMUX~25^MUX_2~91\
+ addr2[3]=async_fifo.fifomem^nMUX~25^MUX_2~92 addr2[4]=unconn addr2[5]=unconn\
+ addr2[6]=unconn addr2[7]=unconn addr2[8]=unconn addr2[9]=unconn\
+ addr2[10]=unconn addr2[11]=unconn addr2[12]=unconn addr2[13]=unconn\
+ addr2[14]=unconn data2=async_fifo.fifomem^nMUX~25^MUX_2~99\
+ we2=async_fifo.fifomem^nMUX~25^MUX_2~101 clk=async_fifo^wr_clk data1=gnd\
+ we1=gnd out1=async_fifo.fifomem.mem^out1~6\
+ out2=dummy_implicit_memory_output~6
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28
+0 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo.full_unit^wr_bin~1_FF gnd async_fifo.fifomem^nMUX~25^MUX_2~90
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo.full_unit^wr_bin~2_FF gnd async_fifo.fifomem^nMUX~25^MUX_2~91
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo.full_unit^wr_bin~3_FF gnd async_fifo.fifomem^nMUX~25^MUX_2~92
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo^wr_data~0 gnd async_fifo.fifomem^nMUX~25^MUX_2~93
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo^wr_data~1 gnd async_fifo.fifomem^nMUX~25^MUX_2~94
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo^wr_data~2 gnd async_fifo.fifomem^nMUX~25^MUX_2~95
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo^wr_data~3 gnd async_fifo.fifomem^nMUX~25^MUX_2~96
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo^wr_data~4 gnd async_fifo.fifomem^nMUX~25^MUX_2~97
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo^wr_data~5 gnd async_fifo.fifomem^nMUX~25^MUX_2~98
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo^wr_data~6 gnd async_fifo.fifomem^nMUX~25^MUX_2~99
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 async_fifo^wr_data~7 gnd async_fifo.fifomem^nMUX~25^MUX_2~100
+1-1- 1
+-1-1 1
+
+.names async_fifo.fifomem^lAND~27^lAND~102 async_fifo.fifomem^nMUX~25^lNOT~28 vcc gnd async_fifo.fifomem^nMUX~25^MUX_2~101
+1-1- 1
+-1-1 1
+
+.names async_fifo.full_unit^wr_full_FF async_fifo.full_unit^bNOT~69^lNOT~182
+0 1
+
+.names async_fifo^wr_inc async_fifo.full_unit^bNOT~69^lNOT~182 async_fifo.full_unit^bAND~70^lAND~181
+11 1
+
+.names async_fifo.full_unit^wr_bin~0_FF async_fifo.full_unit^bAND~70^lAND~181 async_fifo.full_unit^ADD~71^lXOR~169
+01 1
+10 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^ADD~71^lXOR~169 async_fifo.full_unit^nMUX~62^MUX_2~154
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~154 async_fifo.full_unit^wr_bin~0_FF re async_fifo^wr_clk 3
+
+.names async_fifo.full_unit^wr_bin~0_FF async_fifo.full_unit^bAND~70^lAND~181 async_fifo.full_unit^ADD~71^lAND~170
+11 1
+
+.names async_fifo.full_unit^ADD~71^lAND~170 async_fifo.full_unit^wr_bin~1_FF gnd async_fifo.full_unit^ADD~71^ADDER~171
+001 1
+010 1
+100 1
+111 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^ADD~71^ADDER~171 async_fifo.full_unit^nMUX~62^MUX_2~155
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~155 async_fifo.full_unit^wr_bin~1_FF re async_fifo^wr_clk 3
+
+.names async_fifo.full_unit^ADD~71^lAND~170 async_fifo.full_unit^wr_bin~1_FF gnd async_fifo.full_unit^ADD~71^CARRY~172
+011 1
+101 1
+110 1
+111 1
+
+.names async_fifo.full_unit^ADD~71^CARRY~172 async_fifo.full_unit^wr_bin~2_FF gnd async_fifo.full_unit^ADD~71^ADDER~173
+001 1
+010 1
+100 1
+111 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^ADD~71^ADDER~173 async_fifo.full_unit^nMUX~62^MUX_2~156
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~156 async_fifo.full_unit^wr_bin~2_FF re async_fifo^wr_clk 3
+
+.names async_fifo.full_unit^ADD~71^CARRY~172 async_fifo.full_unit^wr_bin~2_FF gnd async_fifo.full_unit^ADD~71^CARRY~174
+011 1
+101 1
+110 1
+111 1
+
+.names async_fifo.full_unit^ADD~71^CARRY~174 async_fifo.full_unit^wr_bin~3_FF gnd async_fifo.full_unit^ADD~71^ADDER~175
+001 1
+010 1
+100 1
+111 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^ADD~71^ADDER~175 async_fifo.full_unit^nMUX~62^MUX_2~157
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~157 async_fifo.full_unit^wr_bin~3_FF re async_fifo^wr_clk 3
+
+.names async_fifo.full_unit^ADD~71^CARRY~174 async_fifo.full_unit^wr_bin~3_FF gnd async_fifo.full_unit^ADD~71^CARRY~176
+011 1
+101 1
+110 1
+111 1
+
+.names async_fifo.full_unit^ADD~71^CARRY~176 async_fifo.full_unit^wr_bin~4_FF gnd async_fifo.full_unit^ADD~71^ADDER~177
+001 1
+010 1
+100 1
+111 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^ADD~71^ADDER~177 async_fifo.full_unit^nMUX~62^MUX_2~158
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~158 async_fifo.full_unit^wr_bin~4_FF re async_fifo^wr_clk 3
+
+.names async_fifo.full_unit^ADD~71^ADDER~177 async_fifo.full_unit^ADD~71^ADDER~175 async_fifo.full_unit^bXOR~78^lXOR~167
+01 1
+10 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^bXOR~78^lXOR~167 async_fifo.full_unit^nMUX~62^MUX_2~162
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~162 async_fifo.full_unit^wr_ptr~3_FF re async_fifo^wr_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.full_unit^wr_ptr~3_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~147
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~147 async_fifo.wr_to_rd^q1~3_FF re async_fifo^rd_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.wr_to_rd^q1~3_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~152
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~152 async_fifo.wr_to_rd^q2~3_FF re async_fifo^rd_clk 3
+
+.names async_fifo.wr_to_rd^q2~3_FF async_fifo.empty_unit^bXOR~45^lXOR~120 async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~142
+00 1
+11 1
+
+.names async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~139 async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~140 async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~141 async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~142 async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~143 async_fifo.empty_unit^lEQ~51^lAND~138
+11111 1
+
+.names async_fifo.empty_unit^lNOT~54 async_fifo.empty_unit^nMUX~53^lNOT~55 vcc async_fifo.empty_unit^lEQ~51^lAND~138 async_fifo.empty_unit^nMUX~53^MUX_2~136
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~53^MUX_2~136 async_fifo.empty_unit^rd_empty_FF re async_fifo^rd_clk 3
+
+.names async_fifo.empty_unit^rd_empty_FF async_fifo.empty_unit^bNOT~36^lNOT~135
+0 1
+
+.names async_fifo^rd_inc async_fifo.empty_unit^bNOT~36^lNOT~135 async_fifo.empty_unit^bAND~37^lAND~134
+11 1
+
+.names async_fifo.empty_unit^rd_bin~0_FF async_fifo.empty_unit^bAND~37^lAND~134 async_fifo.empty_unit^ADD~38^lXOR~122
+01 1
+10 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^ADD~38^lXOR~122 async_fifo.empty_unit^nMUX~29^MUX_2~107
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~107 async_fifo.empty_unit^rd_bin~0_FF re async_fifo^rd_clk 3
+
+.names async_fifo.empty_unit^rd_bin~0_FF async_fifo.empty_unit^bAND~37^lAND~134 async_fifo.empty_unit^ADD~38^lAND~123
+11 1
+
+.names async_fifo.empty_unit^ADD~38^lAND~123 async_fifo.empty_unit^rd_bin~1_FF gnd async_fifo.empty_unit^ADD~38^ADDER~124
+001 1
+010 1
+100 1
+111 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^ADD~38^ADDER~124 async_fifo.empty_unit^nMUX~29^MUX_2~108
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~108 async_fifo.empty_unit^rd_bin~1_FF re async_fifo^rd_clk 3
+
+.names async_fifo.empty_unit^ADD~38^lAND~123 async_fifo.empty_unit^rd_bin~1_FF gnd async_fifo.empty_unit^ADD~38^CARRY~125
+011 1
+101 1
+110 1
+111 1
+
+.names async_fifo.empty_unit^ADD~38^CARRY~125 async_fifo.empty_unit^rd_bin~2_FF gnd async_fifo.empty_unit^ADD~38^ADDER~126
+001 1
+010 1
+100 1
+111 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^ADD~38^ADDER~126 async_fifo.empty_unit^nMUX~29^MUX_2~109
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~109 async_fifo.empty_unit^rd_bin~2_FF re async_fifo^rd_clk 3
+
+.names async_fifo.empty_unit^ADD~38^CARRY~125 async_fifo.empty_unit^rd_bin~2_FF gnd async_fifo.empty_unit^ADD~38^CARRY~127
+011 1
+101 1
+110 1
+111 1
+
+.names async_fifo.empty_unit^ADD~38^CARRY~127 async_fifo.empty_unit^rd_bin~3_FF gnd async_fifo.empty_unit^ADD~38^ADDER~128
+001 1
+010 1
+100 1
+111 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^ADD~38^ADDER~128 async_fifo.empty_unit^nMUX~29^MUX_2~110
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~110 async_fifo.empty_unit^rd_bin~3_FF re async_fifo^rd_clk 3
+
+.names async_fifo.empty_unit^ADD~38^CARRY~127 async_fifo.empty_unit^rd_bin~3_FF gnd async_fifo.empty_unit^ADD~38^CARRY~129
+011 1
+101 1
+110 1
+111 1
+
+.names async_fifo.empty_unit^ADD~38^CARRY~129 async_fifo.empty_unit^rd_bin~4_FF gnd async_fifo.empty_unit^ADD~38^ADDER~130
+001 1
+010 1
+100 1
+111 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^ADD~38^ADDER~130 async_fifo.empty_unit^nMUX~29^MUX_2~111
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~111 async_fifo.empty_unit^rd_bin~4_FF re async_fifo^rd_clk 3
+
+.names async_fifo.empty_unit^ADD~38^ADDER~130 async_fifo.empty_unit^ADD~38^ADDER~128 async_fifo.empty_unit^bXOR~45^lXOR~120
+01 1
+10 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^bXOR~45^lXOR~120 async_fifo.empty_unit^nMUX~29^MUX_2~115
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~115 async_fifo.empty_unit^rd_ptr~3_FF re async_fifo^rd_clk 3
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.empty_unit^rd_ptr~3_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~196
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~196 async_fifo.rd_to_wr^q1~3_FF re async_fifo^wr_clk 3
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.rd_to_wr^q1~3_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~201
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~201 async_fifo.rd_to_wr^q2~3_FF re async_fifo^wr_clk 3
+
+.names async_fifo.rd_to_wr^q2~3_FF async_fifo.full_unit^bNOT~56^lNOT~191
+0 1
+
+.names async_fifo.full_unit^bXOR~78^lXOR~167 async_fifo.full_unit^bNOT~56^lNOT~191 async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~189
+00 1
+11 1
+
+.names gnd async_fifo.empty_unit^ADD~38^ADDER~130 async_fifo.empty_unit^bXOR~45^lXOR~121
+01 1
+10 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^bXOR~45^lXOR~121 async_fifo.empty_unit^nMUX~29^MUX_2~116
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~116 async_fifo.empty_unit^rd_ptr~4_FF re async_fifo^rd_clk 3
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.empty_unit^rd_ptr~4_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~197
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~197 async_fifo.rd_to_wr^q1~4_FF re async_fifo^wr_clk 3
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.rd_to_wr^q1~4_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~202
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~202 async_fifo.rd_to_wr^q2~4_FF re async_fifo^wr_clk 3
+
+.names async_fifo.rd_to_wr^q2~4_FF async_fifo.full_unit^bNOT~56^lNOT~192
+0 1
+
+.names async_fifo.full_unit^bXOR~78^lXOR~168 async_fifo.full_unit^bNOT~56^lNOT~192 async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~190
+00 1
+11 1
+
+.names async_fifo.wr_to_rd^q2~4_FF async_fifo.empty_unit^bXOR~45^lXOR~121 async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~143
+00 1
+11 1
+
+.names async_fifo.empty_unit^ADD~38^ADDER~128 async_fifo.empty_unit^ADD~38^ADDER~126 async_fifo.empty_unit^bXOR~45^lXOR~119
+01 1
+10 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^bXOR~45^lXOR~119 async_fifo.empty_unit^nMUX~29^MUX_2~114
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~114 async_fifo.empty_unit^rd_ptr~2_FF re async_fifo^rd_clk 3
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.empty_unit^rd_ptr~2_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~195
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~195 async_fifo.rd_to_wr^q1~2_FF re async_fifo^wr_clk 3
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.rd_to_wr^q1~2_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~200
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~200 async_fifo.rd_to_wr^q2~2_FF re async_fifo^wr_clk 3
+
+.names async_fifo.full_unit^bXOR~78^lXOR~166 async_fifo.rd_to_wr^q2~2_FF async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~188
+00 1
+11 1
+
+.names async_fifo.wr_to_rd^q2~2_FF async_fifo.empty_unit^bXOR~45^lXOR~119 async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~141
+00 1
+11 1
+
+.names async_fifo.empty_unit^ADD~38^ADDER~126 async_fifo.empty_unit^ADD~38^ADDER~124 async_fifo.empty_unit^bXOR~45^lXOR~118
+01 1
+10 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^bXOR~45^lXOR~118 async_fifo.empty_unit^nMUX~29^MUX_2~113
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~113 async_fifo.empty_unit^rd_ptr~1_FF re async_fifo^rd_clk 3
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.empty_unit^rd_ptr~1_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~194
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~194 async_fifo.rd_to_wr^q1~1_FF re async_fifo^wr_clk 3
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2 gnd async_fifo.rd_to_wr^q1~1_FF async_fifo.rd_to_wr^nMUX~0^MUX_2~199
+1-1- 1
+-1-1 1
+
+.latch async_fifo.rd_to_wr^nMUX~0^MUX_2~199 async_fifo.rd_to_wr^q2~1_FF re async_fifo^wr_clk 3
+
+.names async_fifo.full_unit^bXOR~78^lXOR~165 async_fifo.rd_to_wr^q2~1_FF async_fifo.full_unit^lEQ~84^lXNOR~184^lXNOR~187
+00 1
+11 1
+
+.names async_fifo.wr_to_rd^q2~1_FF async_fifo.empty_unit^bXOR~45^lXOR~118 async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~140
+00 1
+11 1
+
+.names async_fifo.empty_unit^ADD~38^ADDER~124 async_fifo.empty_unit^ADD~38^lXOR~122 async_fifo.empty_unit^bXOR~45^lXOR~117
+01 1
+10 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31 gnd async_fifo.empty_unit^bXOR~45^lXOR~117 async_fifo.empty_unit^nMUX~29^MUX_2~112
+1-1- 1
+-1-1 1
+
+.latch async_fifo.empty_unit^nMUX~29^MUX_2~112 async_fifo.empty_unit^rd_ptr~0_FF re async_fifo^rd_clk 3
+
+.names async_fifo.wr_to_rd^q2~0_FF async_fifo.empty_unit^bXOR~45^lXOR~117 async_fifo.empty_unit^lEQ~51^lXNOR~137^lXNOR~139
+00 1
+11 1
+
+.names gnd async_fifo.full_unit^ADD~71^ADDER~177 async_fifo.full_unit^bXOR~78^lXOR~168
+01 1
+10 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^bXOR~78^lXOR~168 async_fifo.full_unit^nMUX~62^MUX_2~163
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~163 async_fifo.full_unit^wr_ptr~4_FF re async_fifo^wr_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.full_unit^wr_ptr~4_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~148
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~148 async_fifo.wr_to_rd^q1~4_FF re async_fifo^rd_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.wr_to_rd^q1~4_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~153
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~153 async_fifo.wr_to_rd^q2~4_FF re async_fifo^rd_clk 3
+
+.names async_fifo.full_unit^ADD~71^ADDER~175 async_fifo.full_unit^ADD~71^ADDER~173 async_fifo.full_unit^bXOR~78^lXOR~166
+01 1
+10 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^bXOR~78^lXOR~166 async_fifo.full_unit^nMUX~62^MUX_2~161
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~161 async_fifo.full_unit^wr_ptr~2_FF re async_fifo^wr_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.full_unit^wr_ptr~2_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~146
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~146 async_fifo.wr_to_rd^q1~2_FF re async_fifo^rd_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.wr_to_rd^q1~2_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~151
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~151 async_fifo.wr_to_rd^q2~2_FF re async_fifo^rd_clk 3
+
+.names async_fifo.full_unit^ADD~71^ADDER~173 async_fifo.full_unit^ADD~71^ADDER~171 async_fifo.full_unit^bXOR~78^lXOR~165
+01 1
+10 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^bXOR~78^lXOR~165 async_fifo.full_unit^nMUX~62^MUX_2~160
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~160 async_fifo.full_unit^wr_ptr~1_FF re async_fifo^wr_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.full_unit^wr_ptr~1_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~145
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~145 async_fifo.wr_to_rd^q1~1_FF re async_fifo^rd_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.wr_to_rd^q1~1_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~150
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~150 async_fifo.wr_to_rd^q2~1_FF re async_fifo^rd_clk 3
+
+.names async_fifo.full_unit^ADD~71^ADDER~171 async_fifo.full_unit^ADD~71^lXOR~169 async_fifo.full_unit^bXOR~78^lXOR~164
+01 1
+10 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64 gnd async_fifo.full_unit^bXOR~78^lXOR~164 async_fifo.full_unit^nMUX~62^MUX_2~159
+1-1- 1
+-1-1 1
+
+.latch async_fifo.full_unit^nMUX~62^MUX_2~159 async_fifo.full_unit^wr_ptr~0_FF re async_fifo^wr_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.full_unit^wr_ptr~0_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~144
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~144 async_fifo.wr_to_rd^q1~0_FF re async_fifo^rd_clk 3
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10 gnd async_fifo.wr_to_rd^q1~0_FF async_fifo.wr_to_rd^nMUX~8^MUX_2~149
+1-1- 1
+-1-1 1
+
+.latch async_fifo.wr_to_rd^nMUX~8^MUX_2~149 async_fifo.wr_to_rd^q2~0_FF re async_fifo^rd_clk 3
+
+.names async_fifo^wr_rst_n async_fifo.rd_to_wr^lNOT~1
+0 1
+
+.names async_fifo.rd_to_wr^lNOT~1 async_fifo.rd_to_wr^nMUX~0^lNOT~2
+0 1
+
+.names async_fifo^wr_rst_n async_fifo.full_unit^lNOT~63
+0 1
+
+.names async_fifo.full_unit^lNOT~63 async_fifo.full_unit^nMUX~62^lNOT~64
+0 1
+
+.names async_fifo^wr_rst_n async_fifo.full_unit^lNOT~87
+0 1
+
+.names async_fifo.full_unit^lNOT~87 async_fifo.full_unit^nMUX~86^lNOT~88
+0 1
+
+.names async_fifo^wr_inc async_fifo.fifomem^lAND~27^bOR~103^lOR~105
+1 1
+
+.names async_fifo^rd_rst_n async_fifo.wr_to_rd^lNOT~9
+0 1
+
+.names async_fifo.wr_to_rd^lNOT~9 async_fifo.wr_to_rd^nMUX~8^lNOT~10
+0 1
+
+.names async_fifo^rd_rst_n async_fifo.empty_unit^lNOT~30
+0 1
+
+.names async_fifo.empty_unit^lNOT~30 async_fifo.empty_unit^nMUX~29^lNOT~31
+0 1
+
+.names async_fifo^rd_rst_n async_fifo.empty_unit^lNOT~54
+0 1
+
+.names async_fifo.empty_unit^lNOT~54 async_fifo.empty_unit^nMUX~53^lNOT~55
+0 1
+
+.names async_fifo.full_unit^wr_full_FF async_fifo^wr_full
+1 1
+
+.names async_fifo.fifomem.mem^out1~0 async_fifo^rd_data~0
+1 1
+
+.names async_fifo.fifomem.mem^out1~1 async_fifo^rd_data~1
+1 1
+
+.names async_fifo.fifomem.mem^out1~2 async_fifo^rd_data~2
+1 1
+
+.names async_fifo.fifomem.mem^out1~3 async_fifo^rd_data~3
+1 1
+
+.names async_fifo.fifomem.mem^out1~4 async_fifo^rd_data~4
+1 1
+
+.names async_fifo.fifomem.mem^out1~5 async_fifo^rd_data~5
+1 1
+
+.names async_fifo.fifomem.mem^out1~6 async_fifo^rd_data~6
+1 1
+
+.names async_fifo.fifomem.mem^out1~7 async_fifo^rd_data~7
+1 1
+
+.names async_fifo.empty_unit^rd_empty_FF async_fifo^rd_empty
+1 1
+
+.end
+
+
+.model dual_port_ram
+.inputs clk data2 data1 addr2[0] addr2[1] addr2[2] addr2[3] addr2[4] \
+ addr2[5] addr2[6] addr2[7] addr2[8] addr2[9] addr2[10] addr2[11] \
+ addr2[12] addr2[13] addr2[14] addr1[0] addr1[1] addr1[2] addr1[3] \
+ addr1[4] addr1[5] addr1[6] addr1[7] addr1[8] addr1[9] addr1[10] \
+ addr1[11] addr1[12] addr1[13] addr1[14] we2 we1
+.outputs out2 out1
+.blackbox
+.end
+

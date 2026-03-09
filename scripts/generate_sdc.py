@@ -3,14 +3,8 @@ import random
 from itertools import product
 from itertools import combinations
 
-'''
-TODO
--get_ commands
--set_operating_conditions
--THE LIST OPERATING_CONDITIONS
--Minor fixes/cleanup
-'''
-
+#TODO
+#Fix set_disable_timing
 
 #PATH CONFIGURATION
 ##################################################################################################################################################
@@ -197,8 +191,11 @@ def generate_pattern(object_type):
 ##################################################################################################################################################
 def generate_create_clock():
     '''
-    Required: -period
-    Optional: -name, -waveform, -add, pin_list
+    create_clock -period <float>
+            (-name <string>)?
+            (-waveform {<float> <float>})?
+            (-add)?
+            (<pin_list>)?
     '''
     #List containing all possible combinations of options
     commands = []
@@ -352,12 +349,67 @@ def generate_get_pins():
 
 def generate_set_input_delay():
     '''
+    set_input_delay (-rise)?
+                (-fall)?
+                (-max)?
+                (-min)?
+                (-clock <clock>)?
+                (-clock_fall)?
+                <delay: float>
+                <pin/port list>
+
     Note
     -clock_fall should be used with -clock
     -max, -min are exclusive
     -reference_pin cannot be used with latency options
     
     '''
+    commands = []
+    optional_options = ["-rise", "-fall", "-max", "-min", "-clock", "-clock_fall"]
+    
+    for i in range(len(DELAYS)): 
+        delay = DELAYS[i]
+        
+        for j in range(len(optional_options) + 1):
+            for option_combination in combinations(optional_options, j):
+                
+                if "-clock_fall" in option_combination and "-clock" not in option_combination:
+                    continue
+                if "-max" in option_combination and "-min" in option_combination:
+                    continue
+            
+                #Delay value required
+                pieces = [f"set_input_delay", f"{delay}"]
+
+                if "-rise" in option_combination:
+                    pieces.append("-rise")
+            
+                if "-fall" in option_combination:
+                    pieces.append("-fall")
+                
+                if "-max" in option_combination:
+                    pieces.append("-max")
+                
+                if "-min" in option_combination:
+                    pieces.append("-min")
+
+                if "-clock" in option_combination:
+                    pieces.append(f"-clock [get_clocks src_clk]")
+
+                if "-clock_fall" in option_combination:
+                    pieces.append("-clock_fall")
+
+                pin_port_list = random.choice(PINS + PORTS)
+                pieces.append(pin_port_list)
+
+                #Join the options to create a proper command
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name src_clk [get_ports src_clk]\n"
+                          + pieces)
+                commands.append(pieces)
+                
+    ''' Old Version
     commands = []
     optional_options = ["-rise", "-fall", "-max", "-min", "-clock", "-clock_fall", "-reference_pin", "-source_latency_included", "-network_latency_included", "-add_delay"]
     
@@ -417,16 +469,71 @@ def generate_set_input_delay():
                 pieces = ("create_clock -period 10 -name src_clk [get_ports src_clk]\n"
                           + pieces)
                 commands.append(pieces)
-    
+    '''
     return commands
 
 def generate_set_output_delay():
     '''
+    set_output_delay (-rise)?
+                 (-fall)?
+                 (-max)?
+                 (-min)?
+                 (-clock <clock>)?
+                 (-clock_fall)?
+                 <delay: float>
+                 <pin/port list>
+
     Note
     -clock_fall should be used with -clock
     -max, -min are exclusive
     -reference_pin cannot be used with latency options
     '''
+    commands = []
+    optional_options = ["-rise", "-fall", "-max", "-min", "-clock", "-clock_fall"]
+    for i in range(len(DELAYS)):
+        delay = DELAYS[i]
+        
+        for j in range(len(optional_options) + 1):
+            for option_combination in combinations(optional_options, j):
+                
+                if "-clock_fall" in option_combination and "-clock" not in option_combination:
+                    continue
+                if "-max" in option_combination and "-min" in option_combination:
+                    continue
+
+                #Delay value required
+                pieces = [f"set_output_delay", f"{delay}"] 
+                
+                if "-rise" in option_combination:
+                    pieces.append("-rise")
+                
+                if "-fall" in option_combination:
+                    pieces.append("-fall")
+                    
+                if "-max" in option_combination:
+                    pieces.append("-max")
+                    
+                if "-min" in option_combination:
+                    pieces.append("-min")
+
+                if "-clock" in option_combination:
+                    #TODO: Might be [get_clocks src_clk]
+                    pieces.append(f"-clock [get_clocks src_clk]")
+
+                if "-clock_fall" in option_combination:
+                    pieces.append("-clock_fall")
+
+                pin_port_list = random.choice(PINS + PORTS)
+                pieces.append(pin_port_list)
+
+                #Join the options to create a proper command
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name src_clk [get_ports src_clk]\n"
+                          + pieces)
+                commands.append(pieces)
+    
+    ''' Old Version
     commands = []
     optional_options = ["-rise", "-fall", "-max", "-min", "-clock", "-clock_fall", "-reference_pin", "-source_latency_included", "-network_latency_included", "-add_delay"]
     for i in range(len(DELAYS)):
@@ -488,13 +595,64 @@ def generate_set_output_delay():
                 pieces = ("create_clock -period 10 -name src_clk [get_ports src_clk]\n"
                           + pieces)
                 commands.append(pieces)
-    
+    '''
     return commands
     
 def generate_set_clock_latency():
     '''
+    set_clock_latency (-source)?
+                  (-rise)?
+                  (-fall)?
+                  (-min)?
+                  (-max)?
+                  <latency: float>
+                  <clocks, ports, pins>
+
     Required options: delay, objects
     '''
+    commands = []
+    optional_options = ["-source", "-rise", "-fall", "-max", "-min"]
+
+    for i in range(len(DELAYS)):
+        delay = DELAYS[i]
+        
+        for j in range(len(optional_options) + 1):
+            for option_combination in combinations(optional_options, j):
+                
+                if "-max" in option_combination and "-min" in option_combination:
+                    continue
+                
+                pieces = ["set_clock_latency", f"{delay}"]
+                
+                #Handle optional arguments
+                if "-source" in option_combination:
+                    pieces.append(random.choice(CLOCKS))
+                    pieces.append("-source")
+                    
+                if "-source" not in option_combination:
+                    pieces.append(random.choice(CLOCKS + PINS + PORTS))
+                    
+                if "-rise" in option_combination:
+                    pieces.append("-rise")
+                    
+                if "-fall" in option_combination:
+                    pieces.append("-fall")
+                    
+                if "-max" in option_combination:
+                    pieces.append("-max")
+                    
+                if "-min" in option_combination:
+                    pieces.append("-min")
+
+                #Join the options to create a proper command
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name clk1 [get_ports clk1]\n"
+                          "create_clock -period 20 -name clk2 [get_ports clk2]\n"
+                          + pieces)
+                commands.append(pieces)
+                
+    ''' Old Version
     commands = []
     optional_options = ["-source", "-rise", "-fall", "-max", "-min", "-clock"]
 
@@ -541,11 +699,20 @@ def generate_set_clock_latency():
                           "create_clock -period 20 -name clk2 [get_ports clk2]\n"
                           + pieces)
                 commands.append(pieces)
-    
+    '''
     return commands
 
 def generate_set_clock_uncertainty():  
     '''
+    set_clock_uncertainty (-from <clock>)?
+                      (-to <clock>)?
+                      (-rise)?
+                      (-fall)?
+                      (-setup)?
+                      (-hold)?
+                      <uncertainty: float>
+                      <clocks, ports, pins>
+    
     Note
     the from variants are all mutually exclusive
     the to variants are all mutually exclusive
@@ -553,6 +720,51 @@ def generate_set_clock_uncertainty():
     
     from clock is always clk1, to clock is always clk2
     '''
+    commands = [] #List containing all possible combinations of options
+    
+    optional_options = ["-rise", "-fall", "-setup", "-hold", "-from", "-to"]
+
+
+    for i in range(len(UNCERTAINTIES)):
+        uncertainty = UNCERTAINTIES[i]
+        for j in range(len(optional_options) + 1):
+            for option_combination in combinations(optional_options, j):
+                
+                pieces = ["set_clock_uncertainty", f"{uncertainty}"] 
+                
+                if "-rise" in option_combination:
+                    pieces.append("-rise")
+                    
+                if "-fall" in option_combination:
+                    pieces.append("-fall")
+                    
+                if "-setup" in option_combination:
+                    pieces.append("-setup")
+                    
+                if "-hold" in option_combination:
+                    pieces.append("-hold")
+                    
+                if "-from" in option_combination:
+                    #FIXME: Maybe [get_clocks clk1] or {clk1}
+                    pieces.append(f"-from [get_clocks clk1]")
+
+                if "-to" in option_combination:
+                    #FIXME: Maybe [get_clocks clk2] or {clk2}
+                    pieces.append(f"-to [get_clocks clk2]")
+
+                #Positional object list
+                obj = random.choice(CLOCKS + PORTS + PINS)
+                pieces.append(f"{obj}")
+
+                #Join the options to create a proper command
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name clk1 [get_ports clk1]\n"
+                          "create_clock -period 20 -name clk2 [get_ports clk2]\n"
+                          + pieces)
+                commands.append(pieces)
+                
+    ''' Old Version
     commands = [] #List containing all possible combinations of options
     
     optional_options = ["-rise", "-fall", "-setup", "-hold", "-from", "-rise_from", "-fall_from", "-to", "-rise_to", "-fall_to", "objects"]
@@ -630,7 +842,7 @@ def generate_set_clock_uncertainty():
                           "create_clock -period 20 -name clk2 [get_ports clk2]\n"
                           + pieces)
                 commands.append(pieces)
-            
+    '''        
     return commands
 
 def generate_set_false_path():
@@ -731,11 +943,55 @@ def generate_set_false_path():
 
 def generate_set_max_delay():
     '''
+    set_max_delay (-rise)?
+                (-fall)?
+                (-from <from_list>)?
+                (-to <to_list>)?
+                <delay: float>
+    
     -to variants are mutually exclusive from each other
     -from variants are mutually exclusive from each other
     -through variants are mutually exclusive from each other
     -rise, -fall can only be used with plain -to, -from, -through.
     '''
+    commands = [] #List containing all possible combinations of options
+    
+    optional_options = ["-rise", "-fall", "-from", "-to"]
+    
+    from_list = ["[get_clocks clk1]", "u1", "[get_pins u1/pin1]", "[get_ports port1]"] #Clocks, instances, pins, ports
+    to_list = ["[get_clocks clk2]", "u2", "[get_pins u2/pin2]", "[get_ports port2]"] #Clocks, instances, pins, ports
+
+    for j in range(len(optional_options) + 1):
+        for option_combination in combinations(optional_options, j):
+            
+            delay = random.choice(DELAYS)
+            pieces = ["set_max_delay", f"{delay}"] 
+            
+            #FIXME: Don't make this random
+            from_obj = random.choice(from_list)
+            to_obj = random.choice(to_list)
+            
+            if "-rise" in option_combination:
+                pieces.append("-rise")
+                
+            if "-fall" in option_combination:
+                pieces.append("-fall")
+                
+            if "-from" in option_combination:
+                pieces.append(f"-from {from_obj}")
+
+            if "-to" in option_combination:
+                pieces.append(f"-to {to_obj}")
+
+            #Join the options to create a proper command
+            pieces = " ".join(pieces)
+            #Add create_clock prerequisites
+            pieces = ("create_clock -period 10 -name clk1 [get_pins clk1]\n"
+                        "create_clock -period 20 -name clk2 [get_pins clk2]\n"
+                        + pieces)
+            commands.append(pieces)
+    
+    ''' Old Version
     commands = [] #List containing all possible combinations of options
     
     optional_options = ["-rise", "-fall", "-from", "-rise_from", "-fall_from", "-through", "-rise_through", "-fall_through", 
@@ -820,16 +1076,60 @@ def generate_set_max_delay():
                         "create_clock -period 20 -name clk2 [get_pins clk2]\n"
                         + pieces)
             commands.append(pieces)
-            
+    '''        
     return commands
     
 def generate_set_min_delay():
     '''
+    set_min_delay (-rise)?
+              (-fall)?
+              (-from <from_list>)?
+              (-to <to_list>)?
+              <delay: float>
+
     -to variants are mutually exclusive from each other
     -from variants are mutually exclusive from each other
     -through variants are mutually exclusive from each other
     -rise, -fall can only be used with plain -to, -from, -through.
     '''
+    commands = [] #List containing all possible combinations of options
+    
+    optional_options = ["-rise", "-fall", "-from", "-to"]
+    
+    from_list = ["[get_clocks clk1]", "u1", "[get_pins u1/pin1]", "[get_ports port1]"] #Clocks, instances, pins, ports
+    to_list = ["[get_clocks clk2]", "u2", "[get_pins u2/pin2]", "[get_ports port2]"] #Clocks, instances, pins, ports
+
+    for j in range(len(optional_options) + 1):
+        for option_combination in combinations(optional_options, j):
+            
+            delay = random.choice(DELAYS)
+            pieces = ["set_min_delay", f"{delay}"]
+            
+            #FIXME: Don't make this random
+            from_obj = random.choice(from_list)
+            to_obj = random.choice(to_list)
+            
+            if "-rise" in option_combination:
+                pieces.append("-rise")
+                
+            if "-fall" in option_combination:
+                pieces.append("-fall")
+                
+            if "-from" in option_combination:
+                pieces.append(f"-from {from_obj}")
+                
+            if "-to" in option_combination:
+                pieces.append(f"-to {to_obj}")
+                
+            #Join the options to create a proper command
+            pieces = " ".join(pieces)
+            #Add create_clock prerequisites
+            pieces = ("create_clock -period 10 -name clk1 [get_pins clk1]\n"
+                        "create_clock -period 20 -name clk2 [get_pins clk2]\n"
+                        + pieces)
+            commands.append(pieces)
+    
+    ''' Old Version
     commands = [] #List containing all possible combinations of options
     
     optional_options = ["-rise", "-fall", "-from", "-rise_from", "-fall_from", "-through", "-rise_through", "-fall_through", 
@@ -915,17 +1215,67 @@ def generate_set_min_delay():
                         "create_clock -period 20 -name clk2 [get_pins clk2]\n"
                         + pieces)
             commands.append(pieces)
-            
+    '''        
     return commands
 
 def generate_set_multicycle_path():
     '''
+    set_multicycle_path (-setup)?
+                    (-hold)?
+                    (-rise)?
+                    (-fall)?
+                    (-from <from_list>)?
+                    (-to <to_list>)?
+                    <path_multiplier: float>
+
     -setup, -hold are mutually exclusive
     -rise, -fall are mutually exclusive
     -from variants, -through variants, -to variants are mutually exclusive within each other
     '''
     commands = [] #List containing all possible combinations of options
 
+    optional_options = ["-setup", "-hold", "-rise", "-fall", "-from", "-to"]
+    
+    from_list = ["[get_clocks clk1]", "u1", "[get_pins u1/pin1]", "[get_ports port1]"] #Clocks, instances, pins, ports
+    to_list = ["[get_clocks clk2]", "u2", "[get_pins u2/pin2]", "[get_ports port2]"] #Clocks, instances, pins, ports
+    
+    multiplier = random.choice(DIVISORS)
+    for j in range(len(optional_options) + 1):
+        for option_combination in combinations(optional_options, j):
+
+            pieces = ["set_multicycle_path", f"{multiplier}"]
+                
+            #FIXME: Don't make this random
+            from_obj = random.choice(from_list)
+            to_obj = random.choice(to_list)
+                
+            if "-setup" in option_combination:
+                pieces.append("-setup")
+                    
+            if "-hold" in option_combination:
+                pieces.append("-hold")
+                    
+            if "-rise" in option_combination:
+                pieces.append("-rise")
+                    
+            if "-fall" in option_combination:
+                pieces.append("-fall")
+                    
+            if "-from" in option_combination:
+                pieces.append(f"-from {from_obj}")
+                
+            if "-to" in option_combination:
+                pieces.append(f"-to {to_obj}")
+
+            #Join the options to create a proper command
+            pieces = " ".join(pieces)
+            #Add create_clock prerequisites
+            pieces = ("create_clock -period 10 -name clk1 [get_pins clk1]\n"
+                      "create_clock -period 20 -name clk2 [get_pins clk2]\n"
+                      + pieces)
+            commands.append(pieces)
+    
+    '''Old Version
     optional_options = ["-setup", "-hold", "-rise", "-fall", "-start", "-end", "-from", "-rise_from", "-fall_from", 
                         "-through", "-rise_through", "-fall_through", "-to", "-rise_to", "-fall_to", "-reset_path"]
 
@@ -1018,7 +1368,7 @@ def generate_set_multicycle_path():
                       "create_clock -period 20 -name clk2 [get_pins clk2]\n"
                       + pieces)
             commands.append(pieces)    
-            
+    '''        
     return commands
 
 def generate_get_cells():
@@ -1141,7 +1491,6 @@ def generate_get_nets():
 def generate_create_generated_clock():
     '''
     -source: a pin or port in the fanout of the master clock that is the source of the generated clock
-    -edge_shift: An option not supported by OpenSTA
     '''
     commands = []
     optional_options = ["-name", "-master_clock", "-divide_by", "-multiply_by", "-edges", "-duty_cycle", "-invert", "-add"]
@@ -1206,7 +1555,7 @@ def generate_create_generated_clock():
             pieces = ("create_clock -period 10 -name src_clk [get_ports src_clk]\n"
                       + pieces)
             commands.append(pieces)
-            
+                    
     return commands
 
 def generate_all_inputs():
@@ -1376,48 +1725,42 @@ def generate_all_registers():
 
 def generate_set_disable_timing():
     '''
-    From the OpenSTA reference: objects is "A list of instances, ports, pins, cells, cell/port, or library/cell/port" 
+    set_disable_timing (-from <from_port>)?
+                   (-to <to_port>)?
+                   <cell, instance, port, pin>
+    A cell should be referred to using the library name and a hierarchical separator
     '''
     
     commands = []
     optional_options = ["-from", "-to"] 
+    from_port = ["[get_ports d_in_1]", "[get_ports d_in_2]"]
+    to_port = ["[get_ports d_out_1]", "[get_ports d_out_2]"]
+    objects = ["comb", "u1", "[get_ports d_in_1]", "[get_pins u1/a]"] #Cells, Instances, Ports, Pins
     
-    for i in range(len(optional_options) + 1):
-        for option_combination in combinations(optional_options, i):
+    for _ in range(2): # Number of total constraint generations
+        for i in range(len(optional_options) + 1):
+            for option_combination in combinations(optional_options, i):
+                
+                pieces = ["set_disable_timing"]
+                
+                if "-from" in option_combination:
+                    f_port = random.choice(from_port)
+                    pieces.append(f"-from {f_port}") 
+                
+                if "-to" in option_combination:
+                    t_port = random.choice(to_port)
+                    pieces.append(f"-to {t_port}") 
+                
+                pieces.append(random.choice(objects))
             
-            pieces = ["set_disable_timing"]
-            
-            #FIXME: Do not make this random.
-            #Generate the required 'objects' argument 
-            objects1 = random.choice(INSTANCES + PORTS + PINS + CELLS)
-            objects2 = "/".join([random.choice(CELLS), random.choice(PORTS)])
-            objects3 = "/".join([random.choice(LIBRARIES), random.choice(CELLS), random.choice(PORTS)])
-            objects = random.choice([objects1, objects2, objects3])
-            pieces.append(objects)
-            
-            from_port = None #To handle 'to' logic
-            
-            if "-from" in option_combination:
-                #FIXME: Do not make this random.
-                from_port = random.choice(PORTS)
-                pieces.append(f"-from {from_port}") 
-            
-            if "-to" in option_combination:
-                #FIXME: Do not make this random.
-                #Ensure 'to_port' is different from 'from_port' if 'from_port' exists
-                valid_ports = [p for p in PORTS if p != from_port]
-                if not valid_ports:
-                    valid_ports = PORTS
-                to_port = random.choice(valid_ports)
-                pieces.append(f"-to {to_port}") 
-            
-            commands.append(" ".join(pieces))
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name clk [get_ports clk]\n" + pieces)
+                commands.append(pieces)
             
     return commands
 
 
-
-    
 #Reference
 ##################################################################################################################################################
 GENERATORS = {
