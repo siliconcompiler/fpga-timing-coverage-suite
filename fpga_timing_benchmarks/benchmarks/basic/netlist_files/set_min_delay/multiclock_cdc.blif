@@ -1,0 +1,103 @@
+.model multiclock_cdc
+.inputs multiclock_cdc^clk_A multiclock_cdc^reset_A multiclock_cdc^clk_B multiclock_cdc^reset_B
+.outputs multiclock_cdc^count_A~0 multiclock_cdc^count_A~1 multiclock_cdc^count_A~2 multiclock_cdc^count_A~3 multiclock_cdc^sync_data_B
+
+.names gnd
+.names unconn
+.names vcc
+1
+
+.names multiclock_cdc^reset_A multiclock_cdc^nMUX~0^lNOT~1 gnd multiclock_cdc^ADD~2-1[1] multiclock_cdc^nMUX~0^MUX_2~7
+1-1- 1
+-1-1 1
+
+.latch multiclock_cdc^nMUX~0^MUX_2~7 multiclock_cdc^count_A~0_FF re multiclock_cdc^clk_A 3
+
+
+.subckt adder a[0]=multiclock_cdc^count_A~0_FF b[0]=vcc\
+ cin[0]=multiclock_cdc^ADD~2-0[0] cout[0]=multiclock_cdc^ADD~2-1[0]\
+ sumout[0]=multiclock_cdc^ADD~2-1[1]
+
+
+.subckt adder a[0]=multiclock_cdc^count_A~1_FF b[0]=gnd\
+ cin[0]=multiclock_cdc^ADD~2-1[0] cout[0]=multiclock_cdc^ADD~2-2[0]\
+ sumout[0]=multiclock_cdc^ADD~2-2[1]
+
+
+.subckt adder a[0]=multiclock_cdc^count_A~2_FF b[0]=gnd\
+ cin[0]=multiclock_cdc^ADD~2-2[0] cout[0]=multiclock_cdc^ADD~2-3[0]\
+ sumout[0]=multiclock_cdc^ADD~2-3[1]
+
+
+.subckt adder a[0]=multiclock_cdc^count_A~3_FF b[0]=gnd\
+ cin[0]=multiclock_cdc^ADD~2-3[0] cout[0]=multiclock_cdc^ADD~2-4[0]\
+ sumout[0]=multiclock_cdc^ADD~2-4[1]
+
+.names multiclock_cdc^reset_A multiclock_cdc^nMUX~0^lNOT~1 gnd multiclock_cdc^ADD~2-4[1] multiclock_cdc^nMUX~0^MUX_2~10
+1-1- 1
+-1-1 1
+
+.latch multiclock_cdc^nMUX~0^MUX_2~10 multiclock_cdc^count_A~3_FF re multiclock_cdc^clk_A 3
+
+.latch multiclock_cdc^count_A~3_FF multiclock_cdc^data_A_FF re multiclock_cdc^clk_A 3
+
+.names multiclock_cdc^reset_B multiclock_cdc^nMUX~3^lNOT~4 gnd multiclock_cdc^data_A_FF multiclock_cdc^nMUX~3^MUX_2~5
+1-1- 1
+-1-1 1
+
+.latch multiclock_cdc^nMUX~3^MUX_2~5 multiclock_cdc^sync_ff1_FF re multiclock_cdc^clk_B 3
+
+.names multiclock_cdc^reset_B multiclock_cdc^nMUX~3^lNOT~4 gnd multiclock_cdc^sync_ff1_FF multiclock_cdc^nMUX~3^MUX_2~6
+1-1- 1
+-1-1 1
+
+.latch multiclock_cdc^nMUX~3^MUX_2~6 multiclock_cdc^sync_ff2_FF re multiclock_cdc^clk_B 3
+
+.latch multiclock_cdc^sync_ff2_FF multiclock_cdc^sync_data_B_FF re multiclock_cdc^clk_B 3
+
+.names multiclock_cdc^reset_A multiclock_cdc^nMUX~0^lNOT~1 gnd multiclock_cdc^ADD~2-3[1] multiclock_cdc^nMUX~0^MUX_2~9
+1-1- 1
+-1-1 1
+
+.latch multiclock_cdc^nMUX~0^MUX_2~9 multiclock_cdc^count_A~2_FF re multiclock_cdc^clk_A 3
+
+.names multiclock_cdc^reset_A multiclock_cdc^nMUX~0^lNOT~1 gnd multiclock_cdc^ADD~2-2[1] multiclock_cdc^nMUX~0^MUX_2~8
+1-1- 1
+-1-1 1
+
+.latch multiclock_cdc^nMUX~0^MUX_2~8 multiclock_cdc^count_A~1_FF re multiclock_cdc^clk_A 3
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=multiclock_cdc^ADD~2-0[0]\
+ sumout[0]=multiclock_cdc^ADD~2-0~dummy_output~0~1
+
+.names multiclock_cdc^reset_A multiclock_cdc^nMUX~0^lNOT~1
+0 1
+
+.names multiclock_cdc^reset_B multiclock_cdc^nMUX~3^lNOT~4
+0 1
+
+.names multiclock_cdc^count_A~0_FF multiclock_cdc^count_A~0
+1 1
+
+.names multiclock_cdc^count_A~1_FF multiclock_cdc^count_A~1
+1 1
+
+.names multiclock_cdc^count_A~2_FF multiclock_cdc^count_A~2
+1 1
+
+.names multiclock_cdc^count_A~3_FF multiclock_cdc^count_A~3
+1 1
+
+.names multiclock_cdc^sync_data_B_FF multiclock_cdc^sync_data_B
+1 1
+
+.end
+
+.model adder
+.inputs  a[0]  b[0]  cin[0]
+.outputs cout[0] sumout[0]
+.blackbox
+.end
+
