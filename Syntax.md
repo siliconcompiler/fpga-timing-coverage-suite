@@ -1,7 +1,7 @@
 # Running the Syntax Suite
 
 Follow the steps below to generate SDC files and run the syntax validation tests.
-
+First, provide a valid path to VTR in ```config.py```. All other paths are relative to the repository, and changes need not be made.
 
 ## 1. Generate SDC Files
 First, generate the SDC constraints using the following command:
