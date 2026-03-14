@@ -1,0 +1,1105 @@
+.model dot_product_pipe
+.inputs dot_product_pipe^clk dot_product_pipe^n_rst dot_product_pipe^start dot_product_pipe^num_col~0 dot_product_pipe^num_col~1 dot_product_pipe^num_col~2 dot_product_pipe^num_col~3 dot_product_pipe^num_col~4 dot_product_pipe^vec~0 dot_product_pipe^vec~1 dot_product_pipe^vec~2 dot_product_pipe^vec~3 dot_product_pipe^vec~4 dot_product_pipe^vec~5 dot_product_pipe^vec~6 dot_product_pipe^vec~7 dot_product_pipe^vec~8 dot_product_pipe^vec~9 dot_product_pipe^vec~10 dot_product_pipe^vec~11 dot_product_pipe^vec~12 dot_product_pipe^vec~13 dot_product_pipe^vec~14 dot_product_pipe^vec~15 dot_product_pipe^col~0 dot_product_pipe^col~1 dot_product_pipe^col~2 dot_product_pipe^col~3 dot_product_pipe^col~4 dot_product_pipe^col~5 dot_product_pipe^col~6 dot_product_pipe^col~7 dot_product_pipe^col~8 dot_product_pipe^col~9 dot_product_pipe^col~10 dot_product_pipe^col~11 dot_product_pipe^col~12 dot_product_pipe^col~13 dot_product_pipe^col~14 dot_product_pipe^col~15
+.outputs dot_product_pipe^valid dot_product_pipe^mul_done dot_product_pipe^out~0 dot_product_pipe^out~1 dot_product_pipe^out~2 dot_product_pipe^out~3 dot_product_pipe^out~4
+
+.names gnd
+.names unconn
+.names vcc
+1
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~17-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~18-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~18-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~18-2[1]
+
+
+.subckt adder a[0]=gnd b[0]=gnd cin[0]=dot_product_pipe.u_vec_mul^ADD~18-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~18-3~dummy_output~3~0\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~18-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~18-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~19-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~19-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~19-3[1]
+
+
+.subckt adder a[0]=gnd b[0]=gnd cin[0]=dot_product_pipe.u_vec_mul^ADD~19-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~19-4~dummy_output~4~0\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~19-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~19-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~20-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~20-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~20-4[1]
+
+
+.subckt adder a[0]=gnd b[0]=gnd cin[0]=dot_product_pipe.u_vec_mul^ADD~20-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~20-5~dummy_output~5~0\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~20-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~20-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~21-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~21-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~21-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~21-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~22-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~22-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~22-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~22-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~23-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~23-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~23-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~23-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~24-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~24-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~24-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~24-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~25-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~25-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~25-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~25-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~26-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~26-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~26-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~26-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~27-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~27-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~27-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~27-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~28-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~28-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~28-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~28-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~29-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~29-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~29-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~29-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~30-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~30-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~30-5[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~30-5[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~31-4[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~31-5[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~31-5[1]
+
+.names dot_product_pipe^lNOT~66 dot_product_pipe^nMUX~65^lNOT~67 gnd dot_product_pipe.u_vec_mul^ADD~31-5[1] dot_product_pipe^nMUX~65^MUX_2~160
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~65^MUX_2~160 dot_product_pipe^scalar_out_reg~4_FF re dot_product_pipe^clk 3
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~20-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~21-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~21-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~21-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~21-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~22-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~22-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~22-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~22-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~23-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~23-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~23-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~23-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~24-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~24-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~24-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~24-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~25-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~25-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~25-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~25-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~26-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~26-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~26-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~26-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~27-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~27-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~27-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~27-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~28-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~28-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~28-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~28-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~29-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~29-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~29-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~29-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~30-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~30-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~30-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~30-4[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~31-3[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~31-4[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~31-4[1]
+
+.names dot_product_pipe^lNOT~66 dot_product_pipe^nMUX~65^lNOT~67 gnd dot_product_pipe.u_vec_mul^ADD~31-4[1] dot_product_pipe^nMUX~65^MUX_2~159
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~65^MUX_2~159 dot_product_pipe^scalar_out_reg~3_FF re dot_product_pipe^clk 3
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~19-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~20-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~20-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~20-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~20-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~21-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~21-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~21-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~21-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~22-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~22-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~22-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~22-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~23-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~23-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~23-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~23-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~24-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~24-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~24-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~24-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~25-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~25-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~25-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~25-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~26-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~26-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~26-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~26-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~27-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~27-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~27-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~27-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~28-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~28-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~28-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~28-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~29-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~29-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~29-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~29-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~30-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~30-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~30-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~30-3[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~31-2[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~31-3[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~31-3[1]
+
+.names dot_product_pipe^lNOT~66 dot_product_pipe^nMUX~65^lNOT~67 gnd dot_product_pipe.u_vec_mul^ADD~31-3[1] dot_product_pipe^nMUX~65^MUX_2~158
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~65^MUX_2~158 dot_product_pipe^scalar_out_reg~2_FF re dot_product_pipe^clk 3
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~18-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~19-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~19-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~19-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~19-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~20-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~20-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~20-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~20-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~21-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~21-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~21-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~21-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~22-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~22-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~22-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~22-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~23-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~23-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~23-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~23-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~24-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~24-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~24-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~24-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~25-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~25-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~25-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~25-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~26-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~26-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~26-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~26-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~27-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~27-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~27-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~27-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~28-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~28-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~28-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~28-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~29-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~29-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~29-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~29-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~30-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~30-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~30-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~30-2[1] b[0]=gnd\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~31-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~31-2[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~31-2[1]
+
+.names dot_product_pipe^lNOT~66 dot_product_pipe^nMUX~65^lNOT~67 gnd dot_product_pipe.u_vec_mul^ADD~31-2[1] dot_product_pipe^nMUX~65^MUX_2~157
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~65^MUX_2~157 dot_product_pipe^scalar_out_reg~1_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe.u_ctrl^lNOT~38 dot_product_pipe.u_ctrl^nMUX~37^lNOT~39 gnd dot_product_pipe.u_ctrl^nMUX~40^MUX_2~232 dot_product_pipe.u_ctrl^nMUX~37^MUX_2~107
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe.u_ctrl^nMUX~37^MUX_2~107 dot_product_pipe.u_ctrl^curr_state_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe.u_ctrl^curr_state_FF gnd dot_product_pipe.u_ctrl^lEQ~41^lXNOR~233^lXNOR~235
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^lEQ~41^lXNOR~233^lXNOR~235 dot_product_pipe.u_ctrl^lEQ~41^lAND~234
+1 1
+
+.names dot_product_pipe.u_ctrl^lEQ~41^lAND~234 dot_product_pipe.u_ctrl^lEQ~42^lAND~237 dot_product_pipe.u_ctrl^nMUX~40^lNOR~43 dot_product_pipe.u_ctrl^nMUX~44^MUX_2~239 dot_product_pipe.u_ctrl^nMUX~46^MUX_2~108 gnd dot_product_pipe.u_ctrl^nMUX~40^MUX_2~232
+1--1-- 1
+-1--1- 1
+--1--1 1
+
+.names dot_product_pipe.u_ctrl^nMUX~40^MUX_2~232 gnd dot_product_pipe.u_ctrl^lEQ~55^lXNOR~226^lXNOR~228
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^lEQ~55^lXNOR~226^lXNOR~228 dot_product_pipe.u_ctrl^lEQ~55^lAND~227
+1 1
+
+.names dot_product_pipe.u_ctrl^lEQ~55^lAND~227 dot_product_pipe.u_ctrl^lEQ~56^lAND~230 gnd dot_product_pipe.u_ctrl^ADD~57-1[1] dot_product_pipe.u_ctrl^nMUX~54^MUX_2~219
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe.u_ctrl^lNOT~52 dot_product_pipe.u_ctrl^nMUX~51^lNOT~53 gnd dot_product_pipe.u_ctrl^nMUX~54^MUX_2~219 dot_product_pipe.u_ctrl^nMUX~51^MUX_2~212
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe.u_ctrl^nMUX~51^MUX_2~212 dot_product_pipe.u_ctrl^counter~0_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe.u_ctrl^counter~0_FF dot_product_pipe.u_ctrl^MIN~59-1[1] dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~111
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~111 dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~112 dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~113 dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~114 dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~115 dot_product_pipe.u_ctrl^lEQ~48^lAND~110
+11111 1
+
+.names dot_product_pipe.u_ctrl^lEQ~48^lAND~110 dot_product_pipe.u_ctrl^nMUX~46^lNOT~49 gnd vcc dot_product_pipe.u_ctrl^nMUX~46^MUX_2~108
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe.u_ctrl^lEQ~48^lAND~110 dot_product_pipe.u_ctrl^nMUX~46^lNOT~49
+0 1
+
+
+.subckt adder a[0]=dot_product_pipe.u_ctrl^counter~0_FF b[0]=vcc\
+ cin[0]=dot_product_pipe.u_ctrl^ADD~57-0[0]\
+ cout[0]=dot_product_pipe.u_ctrl^ADD~57-1[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^ADD~57-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_ctrl^counter~1_FF b[0]=gnd\
+ cin[0]=dot_product_pipe.u_ctrl^ADD~57-1[0]\
+ cout[0]=dot_product_pipe.u_ctrl^ADD~57-2[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^ADD~57-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_ctrl^counter~2_FF b[0]=gnd\
+ cin[0]=dot_product_pipe.u_ctrl^ADD~57-2[0]\
+ cout[0]=dot_product_pipe.u_ctrl^ADD~57-3[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^ADD~57-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_ctrl^counter~3_FF b[0]=gnd\
+ cin[0]=dot_product_pipe.u_ctrl^ADD~57-3[0]\
+ cout[0]=dot_product_pipe.u_ctrl^ADD~57-4[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^ADD~57-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_ctrl^counter~4_FF b[0]=gnd\
+ cin[0]=dot_product_pipe.u_ctrl^ADD~57-4[0]\
+ cout[0]=dot_product_pipe.u_ctrl^ADD~57-5[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^ADD~57-5[1]
+
+.names dot_product_pipe.u_ctrl^lEQ~55^lAND~227 dot_product_pipe.u_ctrl^lEQ~56^lAND~230 gnd dot_product_pipe.u_ctrl^ADD~57-5[1] dot_product_pipe.u_ctrl^nMUX~54^MUX_2~223
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe.u_ctrl^lNOT~52 dot_product_pipe.u_ctrl^nMUX~51^lNOT~53 gnd dot_product_pipe.u_ctrl^nMUX~54^MUX_2~223 dot_product_pipe.u_ctrl^nMUX~51^MUX_2~216
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe.u_ctrl^nMUX~51^MUX_2~216 dot_product_pipe.u_ctrl^counter~4_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe.u_ctrl^counter~4_FF dot_product_pipe.u_ctrl^MIN~59-5[1] dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~115
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^counter~4_FF dot_product_pipe.u_ctrl^MIN~59-5[1] dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~154
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~150 dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~151 dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~152 dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~153 dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~154 dot_product_pipe.u_ctrl^lEQ~60^lAND~149
+11111 1
+
+.names dot_product_pipe.u_ctrl^lEQ~60^lAND~149 dot_product_pipe.u_ctrl^nMUX~58^lNOT~61 vcc gnd dot_product_pipe.u_ctrl^nMUX~58^MUX_2~116
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe.u_ctrl^lEQ~55^lAND~227 dot_product_pipe.u_ctrl^lEQ~56^lAND~230 gnd dot_product_pipe.u_ctrl^nMUX~58^MUX_2~116 dot_product_pipe.u_ctrl^nMUX~54^MUX_2~224
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe.u_ctrl^lNOT~52 dot_product_pipe.u_ctrl^nMUX~51^lNOT~53 gnd dot_product_pipe.u_ctrl^nMUX~54^MUX_2~224 dot_product_pipe.u_ctrl^nMUX~51^MUX_2~217
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe.u_ctrl^nMUX~51^MUX_2~217 dot_product_pipe.u_ctrl^done_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe.u_ctrl^done_FF dot_product_pipe^nMUX~62^MUX_2~194
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~194 dot_product_pipe^done_stage1_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~66 dot_product_pipe^nMUX~65^lNOT~67 gnd dot_product_pipe^done_stage1_FF dot_product_pipe^nMUX~65^MUX_2~155
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~65^MUX_2~155 dot_product_pipe^done_stage2_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe.u_ctrl^lEQ~60^lAND~149 dot_product_pipe.u_ctrl^nMUX~58^lNOT~61
+0 1
+
+.names dot_product_pipe.u_ctrl^lEQ~55^lAND~227 dot_product_pipe.u_ctrl^lEQ~56^lAND~230 gnd dot_product_pipe.u_ctrl^ADD~57-4[1] dot_product_pipe.u_ctrl^nMUX~54^MUX_2~222
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe.u_ctrl^lNOT~52 dot_product_pipe.u_ctrl^nMUX~51^lNOT~53 gnd dot_product_pipe.u_ctrl^nMUX~54^MUX_2~222 dot_product_pipe.u_ctrl^nMUX~51^MUX_2~215
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe.u_ctrl^nMUX~51^MUX_2~215 dot_product_pipe.u_ctrl^counter~3_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe.u_ctrl^counter~3_FF dot_product_pipe.u_ctrl^MIN~59-4[1] dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~114
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^counter~3_FF dot_product_pipe.u_ctrl^MIN~59-4[1] dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~153
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^lEQ~55^lAND~227 dot_product_pipe.u_ctrl^lEQ~56^lAND~230 gnd dot_product_pipe.u_ctrl^ADD~57-3[1] dot_product_pipe.u_ctrl^nMUX~54^MUX_2~221
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe.u_ctrl^lNOT~52 dot_product_pipe.u_ctrl^nMUX~51^lNOT~53 gnd dot_product_pipe.u_ctrl^nMUX~54^MUX_2~221 dot_product_pipe.u_ctrl^nMUX~51^MUX_2~214
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe.u_ctrl^nMUX~51^MUX_2~214 dot_product_pipe.u_ctrl^counter~2_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe.u_ctrl^counter~2_FF dot_product_pipe.u_ctrl^MIN~59-3[1] dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~113
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^counter~2_FF dot_product_pipe.u_ctrl^MIN~59-3[1] dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~152
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^lEQ~55^lAND~227 dot_product_pipe.u_ctrl^lEQ~56^lAND~230 gnd dot_product_pipe.u_ctrl^ADD~57-2[1] dot_product_pipe.u_ctrl^nMUX~54^MUX_2~220
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe.u_ctrl^lNOT~52 dot_product_pipe.u_ctrl^nMUX~51^lNOT~53 gnd dot_product_pipe.u_ctrl^nMUX~54^MUX_2~220 dot_product_pipe.u_ctrl^nMUX~51^MUX_2~213
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe.u_ctrl^nMUX~51^MUX_2~213 dot_product_pipe.u_ctrl^counter~1_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe.u_ctrl^counter~1_FF dot_product_pipe.u_ctrl^MIN~59-2[1] dot_product_pipe.u_ctrl^lEQ~48^lXNOR~109^lXNOR~112
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^counter~1_FF dot_product_pipe.u_ctrl^MIN~59-2[1] dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~151
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^counter~0_FF dot_product_pipe.u_ctrl^MIN~59-1[1] dot_product_pipe.u_ctrl^lEQ~60^lXNOR~148^lXNOR~150
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^lEQ~55^lAND~227 dot_product_pipe.u_ctrl^lEQ~56^lAND~230 gnd vcc dot_product_pipe.u_ctrl^nMUX~54^MUX_2~225
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe.u_ctrl^lNOT~52 dot_product_pipe.u_ctrl^nMUX~51^lNOT~53 gnd dot_product_pipe.u_ctrl^nMUX~54^MUX_2~225 dot_product_pipe.u_ctrl^nMUX~51^MUX_2~218
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe.u_ctrl^nMUX~51^MUX_2~218 dot_product_pipe.u_ctrl^in_valid_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe.u_ctrl^in_valid_FF dot_product_pipe^nMUX~62^MUX_2~195
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~195 dot_product_pipe^valid_stage1_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~66 dot_product_pipe^nMUX~65^lNOT~67 gnd dot_product_pipe^valid_stage1_FF dot_product_pipe^nMUX~65^MUX_2~161
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~65^MUX_2~161 dot_product_pipe^valid_stage2_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe.u_ctrl^nMUX~40^MUX_2~232 vcc dot_product_pipe.u_ctrl^lEQ~56^lXNOR~229^lXNOR~231
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^lEQ~56^lXNOR~229^lXNOR~231 dot_product_pipe.u_ctrl^lEQ~56^lAND~230
+1 1
+
+.names dot_product_pipe.u_ctrl^lEQ~41^lAND~234 dot_product_pipe.u_ctrl^lEQ~42^lAND~237 dot_product_pipe.u_ctrl^nMUX~40^lNOR~43
+00 1
+
+.names dot_product_pipe.u_ctrl^curr_state_FF vcc dot_product_pipe.u_ctrl^lEQ~42^lXNOR~236^lXNOR~238
+00 1
+11 1
+
+.names dot_product_pipe.u_ctrl^lEQ~42^lXNOR~236^lXNOR~238 dot_product_pipe.u_ctrl^lEQ~42^lAND~237
+1 1
+
+.names dot_product_pipe^start dot_product_pipe.u_ctrl^nMUX~44^lNOT~45 vcc gnd dot_product_pipe.u_ctrl^nMUX~44^MUX_2~239
+1-1- 1
+-1-1 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~0 dot_product_pipe^nMUX~62^MUX_2~196
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~196 dot_product_pipe^vec_in_reg~0_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~0_FF dot_product_pipe^col_in_reg~0_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~162
+11 1
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~162\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~163\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~17-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~17-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~17-1[1]
+
+
+.subckt adder a[0]=gnd b[0]=gnd cin[0]=dot_product_pipe.u_vec_mul^ADD~17-1[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~17-2~dummy_output~2~0\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~17-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~17-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~164\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~18-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~18-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~18-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~18-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~165\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~19-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~19-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~19-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~19-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~166\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~20-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~20-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~20-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~20-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~167\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~21-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~21-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~21-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~21-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~168\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~22-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~22-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~22-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~22-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~169\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~23-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~23-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~23-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~23-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~170\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~24-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~24-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~24-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~24-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~171\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~25-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~25-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~25-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~25-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~172\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~26-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~26-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~26-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~26-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~173\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~27-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~27-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~27-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~27-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~174\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~28-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~28-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~28-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~28-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~175\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~29-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~29-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~29-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~29-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~176\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~30-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~30-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~30-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe.u_vec_mul^ADD~30-1[1]\
+ b[0]=dot_product_pipe.u_vec_mul^bAND~0^lAND~177\
+ cin[0]=dot_product_pipe.u_vec_mul^ADD~31-0[0]\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~31-1[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~31-1[1]
+
+.names dot_product_pipe^lNOT~66 dot_product_pipe^nMUX~65^lNOT~67 gnd dot_product_pipe.u_vec_mul^ADD~31-1[1] dot_product_pipe^nMUX~65^MUX_2~156
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~65^MUX_2~156 dot_product_pipe^scalar_out_reg~0_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~1 dot_product_pipe^nMUX~62^MUX_2~197
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~197 dot_product_pipe^vec_in_reg~1_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~1_FF dot_product_pipe^col_in_reg~1_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~163
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~2 dot_product_pipe^nMUX~62^MUX_2~204
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~204 dot_product_pipe^vec_in_reg~2_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~2_FF dot_product_pipe^col_in_reg~2_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~164
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~3 dot_product_pipe^nMUX~62^MUX_2~205
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~205 dot_product_pipe^vec_in_reg~3_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~3_FF dot_product_pipe^col_in_reg~3_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~165
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~4 dot_product_pipe^nMUX~62^MUX_2~206
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~206 dot_product_pipe^vec_in_reg~4_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~4_FF dot_product_pipe^col_in_reg~4_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~166
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~5 dot_product_pipe^nMUX~62^MUX_2~207
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~207 dot_product_pipe^vec_in_reg~5_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~5_FF dot_product_pipe^col_in_reg~5_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~167
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~6 dot_product_pipe^nMUX~62^MUX_2~208
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~208 dot_product_pipe^vec_in_reg~6_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~6_FF dot_product_pipe^col_in_reg~6_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~168
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~7 dot_product_pipe^nMUX~62^MUX_2~209
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~209 dot_product_pipe^vec_in_reg~7_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~7_FF dot_product_pipe^col_in_reg~7_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~169
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~8 dot_product_pipe^nMUX~62^MUX_2~210
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~210 dot_product_pipe^vec_in_reg~8_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~8_FF dot_product_pipe^col_in_reg~8_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~170
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~9 dot_product_pipe^nMUX~62^MUX_2~211
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~211 dot_product_pipe^vec_in_reg~9_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~9_FF dot_product_pipe^col_in_reg~9_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~171
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~10 dot_product_pipe^nMUX~62^MUX_2~198
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~198 dot_product_pipe^vec_in_reg~10_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~10_FF dot_product_pipe^col_in_reg~10_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~172
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~11 dot_product_pipe^nMUX~62^MUX_2~199
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~199 dot_product_pipe^vec_in_reg~11_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~11_FF dot_product_pipe^col_in_reg~11_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~173
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~12 dot_product_pipe^nMUX~62^MUX_2~200
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~200 dot_product_pipe^vec_in_reg~12_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~12_FF dot_product_pipe^col_in_reg~12_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~174
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~13 dot_product_pipe^nMUX~62^MUX_2~201
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~201 dot_product_pipe^vec_in_reg~13_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~13_FF dot_product_pipe^col_in_reg~13_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~175
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~14 dot_product_pipe^nMUX~62^MUX_2~202
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~202 dot_product_pipe^vec_in_reg~14_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~14_FF dot_product_pipe^col_in_reg~14_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~176
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^vec~15 dot_product_pipe^nMUX~62^MUX_2~203
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~203 dot_product_pipe^vec_in_reg~15_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^vec_in_reg~15_FF dot_product_pipe^col_in_reg~15_FF dot_product_pipe.u_vec_mul^bAND~0^lAND~177
+11 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~0 dot_product_pipe^nMUX~62^MUX_2~178
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~178 dot_product_pipe^col_in_reg~0_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~1 dot_product_pipe^nMUX~62^MUX_2~179
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~179 dot_product_pipe^col_in_reg~1_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~2 dot_product_pipe^nMUX~62^MUX_2~186
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~186 dot_product_pipe^col_in_reg~2_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~3 dot_product_pipe^nMUX~62^MUX_2~187
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~187 dot_product_pipe^col_in_reg~3_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~4 dot_product_pipe^nMUX~62^MUX_2~188
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~188 dot_product_pipe^col_in_reg~4_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~5 dot_product_pipe^nMUX~62^MUX_2~189
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~189 dot_product_pipe^col_in_reg~5_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~6 dot_product_pipe^nMUX~62^MUX_2~190
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~190 dot_product_pipe^col_in_reg~6_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~7 dot_product_pipe^nMUX~62^MUX_2~191
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~191 dot_product_pipe^col_in_reg~7_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~8 dot_product_pipe^nMUX~62^MUX_2~192
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~192 dot_product_pipe^col_in_reg~8_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~9 dot_product_pipe^nMUX~62^MUX_2~193
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~193 dot_product_pipe^col_in_reg~9_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~10 dot_product_pipe^nMUX~62^MUX_2~180
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~180 dot_product_pipe^col_in_reg~10_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~11 dot_product_pipe^nMUX~62^MUX_2~181
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~181 dot_product_pipe^col_in_reg~11_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~12 dot_product_pipe^nMUX~62^MUX_2~182
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~182 dot_product_pipe^col_in_reg~12_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~13 dot_product_pipe^nMUX~62^MUX_2~183
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~183 dot_product_pipe^col_in_reg~13_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~14 dot_product_pipe^nMUX~62^MUX_2~184
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~184 dot_product_pipe^col_in_reg~14_FF re dot_product_pipe^clk 3
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64 gnd dot_product_pipe^col~15 dot_product_pipe^nMUX~62^MUX_2~185
+1-1- 1
+-1-1 1
+
+.latch dot_product_pipe^nMUX~62^MUX_2~185 dot_product_pipe^col_in_reg~15_FF re dot_product_pipe^clk 3
+
+
+.subckt adder a[0]=dot_product_pipe^num_col~0 b[0]=gnd\
+ cin[0]=dot_product_pipe.u_ctrl^MIN~59-0[0]\
+ cout[0]=dot_product_pipe.u_ctrl^MIN~59-1[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^MIN~59-1[1]
+
+
+.subckt adder a[0]=dot_product_pipe^num_col~1 b[0]=vcc\
+ cin[0]=dot_product_pipe.u_ctrl^MIN~59-1[0]\
+ cout[0]=dot_product_pipe.u_ctrl^MIN~59-2[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^MIN~59-2[1]
+
+
+.subckt adder a[0]=dot_product_pipe^num_col~2 b[0]=vcc\
+ cin[0]=dot_product_pipe.u_ctrl^MIN~59-2[0]\
+ cout[0]=dot_product_pipe.u_ctrl^MIN~59-3[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^MIN~59-3[1]
+
+
+.subckt adder a[0]=dot_product_pipe^num_col~3 b[0]=vcc\
+ cin[0]=dot_product_pipe.u_ctrl^MIN~59-3[0]\
+ cout[0]=dot_product_pipe.u_ctrl^MIN~59-4[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^MIN~59-4[1]
+
+
+.subckt adder a[0]=dot_product_pipe^num_col~4 b[0]=vcc\
+ cin[0]=dot_product_pipe.u_ctrl^MIN~59-4[0]\
+ cout[0]=dot_product_pipe.u_ctrl^MIN~59-5[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^MIN~59-5[1]
+
+
+.subckt adder a[0]=gnd b[0]=vcc cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_ctrl^MIN~59-0[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^MIN~59-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_ctrl^ADD~57-0[0]\
+ sumout[0]=dot_product_pipe.u_ctrl^ADD~57-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~31-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~31-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~30-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~30-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~29-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~29-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~28-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~28-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~27-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~27-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~26-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~26-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~25-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~25-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~24-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~24-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~23-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~23-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~22-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~22-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~21-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~21-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~20-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~20-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~19-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~19-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~18-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~18-0~dummy_output~0~1
+
+
+.subckt adder a[0]=vcc b[0]=gnd cin[0]=unconn\
+ cout[0]=dot_product_pipe.u_vec_mul^ADD~17-0[0]\
+ sumout[0]=dot_product_pipe.u_vec_mul^ADD~17-0~dummy_output~0~1
+
+.names dot_product_pipe^n_rst dot_product_pipe.u_ctrl^lNOT~38
+0 1
+
+.names dot_product_pipe.u_ctrl^lNOT~38 dot_product_pipe.u_ctrl^nMUX~37^lNOT~39
+0 1
+
+.names dot_product_pipe^n_rst dot_product_pipe.u_ctrl^lNOT~52
+0 1
+
+.names dot_product_pipe.u_ctrl^lNOT~52 dot_product_pipe.u_ctrl^nMUX~51^lNOT~53
+0 1
+
+.names dot_product_pipe^n_rst dot_product_pipe^lNOT~63
+0 1
+
+.names dot_product_pipe^lNOT~63 dot_product_pipe^nMUX~62^lNOT~64
+0 1
+
+.names dot_product_pipe^n_rst dot_product_pipe^lNOT~66
+0 1
+
+.names dot_product_pipe^lNOT~66 dot_product_pipe^nMUX~65^lNOT~67
+0 1
+
+.names dot_product_pipe^start dot_product_pipe.u_ctrl^nMUX~44^lNOT~45
+0 1
+
+.names dot_product_pipe^valid_stage2_FF dot_product_pipe^valid
+1 1
+
+.names dot_product_pipe^done_stage2_FF dot_product_pipe^mul_done
+1 1
+
+.names dot_product_pipe^scalar_out_reg~0_FF dot_product_pipe^out~0
+1 1
+
+.names dot_product_pipe^scalar_out_reg~1_FF dot_product_pipe^out~1
+1 1
+
+.names dot_product_pipe^scalar_out_reg~2_FF dot_product_pipe^out~2
+1 1
+
+.names dot_product_pipe^scalar_out_reg~3_FF dot_product_pipe^out~3
+1 1
+
+.names dot_product_pipe^scalar_out_reg~4_FF dot_product_pipe^out~4
+1 1
+
+.end
+
+.model adder
+.inputs  a[0]  b[0]  cin[0]
+.outputs cout[0] sumout[0]
+.blackbox
+.end
+
