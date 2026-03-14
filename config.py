@@ -1,6 +1,3 @@
-
-# 4. Clean this config and run_benchmark.py []
-
 from pathlib import Path
 
 ### DIRECTORIES ###
@@ -281,9 +278,9 @@ TIMING_TESTS = []
 # Elements in the list 'SYNTAX_TESTS' are dictionaries, defining each syntax test case. 
 
 # Dictionary Format:
-# 'type': A unique name for the test. Used for result tracking. 
-# 'blif': The name of the BLIF file to be processed by VPR. 
-# 'sdc_name': Name of the timing constraint targeted for syntax validation. 
+# 'type' (str): A unique name for the test. Used for result tracking. 
+# 'blif' (str): The name of the BLIF file to be processed by VPR. 
+# 'sdc_name' (str): Name of the timing constraint targeted for syntax validation. 
 
 create_clock = {
     'type': 'syntax_create_clock',
